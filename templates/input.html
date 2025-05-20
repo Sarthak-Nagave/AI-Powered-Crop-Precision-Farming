@@ -66,7 +66,7 @@
                             <div class="row g-3 mb-3">
                                 <div class="col-md-6">
                                     <label for="soil-type" class="form-label" id="soil-type-label">Soil Type</label>
-                                    <select class="form-select" id="soil-type" required>
+                                    <select class="form-select" id="soil-type" name="soil_type" required>
                                         <option value="" selected disabled id="soil-type-placeholder">Select soil type</option>
                                         <option value="sandy">Sandy</option>
                                         <option value="loamy">Loamy</option>
@@ -76,24 +76,24 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="ph" class="form-label" id="ph-label">pH Value</label>
-                                    <input type="number" class="form-control" id="ph" step="0.1" placeholder="0-14" min="0" max="14" required>
+                                    <input type="number" class="form-control" id="ph" name="ph" step="0.1" placeholder="0-14" min="0" max="14" required>
                                     <div class="invalid-feedback" id="ph-feedback">Please enter a valid pH value (0-14).</div>
                                 </div>
                             </div>
                             <div class="row g-3">
                                 <div class="col-md-4">
                                     <label for="temperature" class="form-label" id="temperature-label">Temperature (°C)</label>
-                                    <input type="number" class="form-control" id="temperature" step="0.1" placeholder="0-50" min="0" max="50" required>
+                                    <input type="number" class="form-control" id="temperature" name="temperature" step="0.1" placeholder="0-50" min="0" max="50" required>
                                     <div class="invalid-feedback" id="temperature-feedback">Please enter a valid temperature (0-50°C).</div>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="humidity" class="form-label" id="humidity-label">Humidity (%)</label>
-                                    <input type="number" class="form-control" id="humidity" placeholder="0-100" min="0" max="100" required>
+                                    <input type="number" class="form-control" id="humidity" name="humidity" placeholder="0-100" min="0" max="100" required>
                                     <div class="invalid-feedback" id="humidity-feedback">Please enter a valid humidity value (0-100%).</div>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="rainfall" class="form-label" id="rainfall-label">Rainfall (mm)</label>
-                                    <input type="number" class="form-control" id="rainfall" placeholder="0-300" min="0" max="300" required>
+                                    <input type="number" class="form-control" id="rainfall" name="rainfall" placeholder="0-300" min="0" max="300" required>
                                     <div class="invalid-feedback" id="rainfall-feedback">Please enter a valid rainfall amount (0-300 mm).</div>
                                 </div>
                             </div>
@@ -112,11 +112,11 @@
                             <div class="row g-3 mb-3">
                                 <div class="col-md-4">
                                     <label for="latitude" class="form-label" id="latitude-label">Latitude</label>
-                                    <input type="number" class="form-control" id="latitude" step="0.000001" placeholder="e.g., 28.7041">
+                                    <input type="number" class="form-control" id="latitude" name="latitude" step="0.000001" placeholder="e.g., 28.7041">
                                 </div>
                                 <div class="col-md-4">
                                     <label for="longitude" class="form-label" id="longitude-label">Longitude</label>
-                                    <input type="number" class="form-control" id="longitude" step="0.000001" placeholder="e.g., 77.1025">
+                                    <input type="number" class="form-control" id="longitude" name="longitude" step="0.000001" placeholder="e.g., 77.1025">
                                 </div>
                                 <div class="col-md-4 d-flex align-items-end">
                                     <button type="button" class="btn btn-secondary w-100" id="location-btn" onclick="getLocation()">

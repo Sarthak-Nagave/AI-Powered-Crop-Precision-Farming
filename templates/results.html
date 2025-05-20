@@ -13,10 +13,10 @@
     <!-- Header -->
     <header class="py-3 mb-4 border-bottom">
         <div class="container d-flex flex-wrap justify-content-center">
-            <span class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">
                 <i class="bi bi-flower1 fs-3 me-2"></i>
                 <span class="fs-4">Crop Recommendation System</span>
-            </span>
+            </a>
             <div class="language-selector">
                 <div class="btn-group" role="group" aria-label="Language selector">
                     <button type="button" class="btn btn-sm btn-outline-secondary active" onclick="changeLanguage('en')">English</button>
@@ -111,8 +111,11 @@
                 </div>
                 
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+                    <a href="/input" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left me-1"></i>Back to Form
+                    </a>
                     <a href="/" class="btn btn-primary">
-                        <i class="bi bi-plus-circle me-1"></i>New Prediction
+                        <i class="bi bi-house me-1"></i>Home Page
                     </a>
                 </div>
             </div>
@@ -132,12 +135,36 @@
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/translations.js') }}"></script>
     <script>
         function speakResult() {
             const resultText = "The best crop for your field is {{ predicted_crop }}";
             const utterance = new SpeechSynthesisUtterance(resultText);
+            
+            // Get the current language from translations.js if available
+            if (typeof currentLanguage !== 'undefined') {
+                switch(currentLanguage) {
+                    case 'hi':
+                        utterance.lang = 'hi-IN';
+                        utterance.text = "आपके खेत के लिए सबसे अच्छी फसल है {{ predicted_crop }}";
+                        break;
+                    case 'mr':
+                        utterance.lang = 'mr-IN';
+                        utterance.text = "तुमच्या शेतासाठी सर्वोत्तम पीक आहे {{ predicted_crop }}";
+                        break;
+                    default:
+                        utterance.lang = 'en-US';
+                }
+            }
+            
             speechSynthesis.speak(utterance);
         }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof updateAllTranslations === 'function') {
+                updateAllTranslations();
+            }
+        });
     </script>
 </body>
 </html>
