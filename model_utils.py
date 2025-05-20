@@ -22,7 +22,7 @@ def load_and_prepare_data(file_path):
     y = df['Crop']
     
     # Encode categorical variables (soil_type)
-    onehot_encoder = OneHotEncoder(sparse=False, handle_unknown='ignore')
+    onehot_encoder = OneHotEncoder(sparse_output=False, handle_unknown='ignore')
     soil_type_encoded = onehot_encoder.fit_transform(X[['soil_type']])
     
     # Encode target variable
