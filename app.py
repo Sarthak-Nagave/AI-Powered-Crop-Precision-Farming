@@ -41,8 +41,13 @@ WEATHER_API_URL = "https://api.openweathermap.org/data/2.5/weather"
 
 @app.route('/')
 def home():
-    """Render the home page"""
-    return render_template('index.html', metrics=metrics)
+    """Render the landing page"""
+    return render_template('landing.html')
+    
+@app.route('/input')
+def input_form():
+    """Render the input form page"""
+    return render_template('input.html', metrics=metrics)
 
 @app.route('/get_weather', methods=['POST'])
 def get_weather():
@@ -89,43 +94,84 @@ def predict():
         return jsonify({"error": "Model not loaded"}), 500
     
     try:
-        data = request.json
-        
-        # Extract features
-        features = {
-            'N': float(data.get('nitrogen')),
-            'P': float(data.get('phosphorus')),
-            'K': float(data.get('potassium')),
-            'temperature': float(data.get('temperature')),
-            'humidity': float(data.get('humidity')),
-            'ph': float(data.get('ph')),
-            'rainfall': float(data.get('rainfall')),
-            'soil_type': data.get('soil_type')
-        }
-        
-        # Preprocess input
-        X = preprocess_input(features, scaler, onehot_encoder)
-        
-        # Make prediction
-        prediction = model.predict(X)
-        predicted_crop = encoder.inverse_transform(prediction)[0]
-        
-        # Get prediction probabilities
-        probabilities = model.predict_proba(X)[0]
-        # Get top 3 crops
-        top_indices = np.argsort(probabilities)[::-1][:3]
-        top_crops = [
-            {
-                "crop": encoder.inverse_transform([idx])[0],
-                "probability": round(float(probabilities[idx] * 100), 2)
+        if request.content_type == 'application/json':
+            data = request.json
+            
+            # Extract features
+            features = {
+                'N': float(data.get('nitrogen')),
+                'P': float(data.get('phosphorus')),
+                'K': float(data.get('potassium')),
+                'temperature': float(data.get('temperature')),
+                'humidity': float(data.get('humidity')),
+                'ph': float(data.get('ph')),
+                'rainfall': float(data.get('rainfall')),
+                'soil_type': data.get('soil_type')
             }
-            for idx in top_indices
-        ]
-        
-        return jsonify({
-            "predicted_crop": predicted_crop,
-            "top_crops": top_crops
-        })
+            
+            # Preprocess input
+            X = preprocess_input(features, scaler, onehot_encoder)
+            
+            # Make prediction
+            prediction = model.predict(X)
+            predicted_crop = encoder.inverse_transform(prediction)[0]
+            
+            # Get prediction probabilities
+            probabilities = model.predict_proba(X)[0]
+            # Get top 3 crops
+            top_indices = np.argsort(probabilities)[::-1][:3]
+            top_crops = [
+                {
+                    "crop": encoder.inverse_transform([idx])[0],
+                    "probability": round(float(probabilities[idx] * 100), 2)
+                }
+                for idx in top_indices
+            ]
+            
+            return jsonify({
+                "predicted_crop": predicted_crop,
+                "top_crops": top_crops
+            })
+        else:
+            # For form submission, render the results page
+            data = request.form
+            
+            # Extract features
+            features = {
+                'N': float(data.get('nitrogen')),
+                'P': float(data.get('phosphorus')),
+                'K': float(data.get('potassium')),
+                'temperature': float(data.get('temperature')),
+                'humidity': float(data.get('humidity')),
+                'ph': float(data.get('ph')),
+                'rainfall': float(data.get('rainfall')),
+                'soil_type': data.get('soil_type')
+            }
+            
+            # Preprocess input
+            X = preprocess_input(features, scaler, onehot_encoder)
+            
+            # Make prediction
+            prediction = model.predict(X)
+            predicted_crop = encoder.inverse_transform(prediction)[0]
+            
+            # Get prediction probabilities
+            probabilities = model.predict_proba(X)[0]
+            # Get top 3 crops
+            top_indices = np.argsort(probabilities)[::-1][:3]
+            alternative_crops = [
+                {
+                    "crop": encoder.inverse_transform([idx])[0],
+                    "probability": round(float(probabilities[idx] * 100), 2)
+                }
+                for idx in top_indices if encoder.inverse_transform([idx])[0] != predicted_crop
+            ]
+            
+            # Return the results page
+            return render_template('results.html', 
+                                  predicted_crop=predicted_crop,
+                                  alternative_crops=alternative_crops,
+                                  input_data=data)
         
     except Exception as e:
         logger.error(f"Error making prediction: {e}")

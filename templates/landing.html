@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Recommendation System</title>
+    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.svg') }}" type="image/svg+xml">
+</head>
+<body>
+    <!-- Header -->
+    <header class="py-3 mb-4 border-bottom">
+        <div class="container d-flex flex-wrap justify-content-center">
+            <span class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">
+                <i class="bi bi-flower1 fs-3 me-2"></i>
+                <span class="fs-4">Crop Recommendation System</span>
+            </span>
+            <div class="language-selector">
+                <div class="btn-group" role="group" aria-label="Language selector">
+                    <button type="button" class="btn btn-sm btn-outline-secondary active" onclick="changeLanguage('en')">English</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="changeLanguage('hi')">हिंदी</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="changeLanguage('mr')">मराठी</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mb-5">
+        <!-- Hero Section -->
+        <div class="p-4 p-md-5 mb-4 rounded bg-dark-subtle">
+            <div class="row">
+                <div class="col-md-7">
+                    <h1 class="display-5 fw-bold" id="hero-title">Find the perfect crop for your field</h1>
+                    <p class="lead my-3" id="hero-subtitle">Get accurate crop recommendations based on soil and climate conditions using our advanced machine learning model.</p>
+                    <div class="d-grid gap-2 d-md-flex">
+                        <a href="/input" class="btn btn-primary btn-lg" id="get-started-btn">Get Started</a>
+                        <button class="btn btn-outline-secondary btn-lg" data-bs-toggle="modal" data-bs-target="#infoModal" id="learn-more-btn">Learn More</button>
+                    </div>
+                </div>
+                <div class="col-md-5 d-flex align-items-center justify-content-center">
+                    <div class="ratio ratio-16x9 w-100">
+                        <img src="https://pixabay.com/get/g43d7fc4f496e79253882267d4fa9809e94dc0fee477b08ab4d847bd13db58e7bc8f53aa43b16f6e9f70548674c2f6e354d40fdcd44c81d6e3cef94362d45d85a_1280.jpg" 
+                             class="img-fluid rounded" alt="Crop farming">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Cards -->
+        <div class="row mb-4 g-4">
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-cloud-sun me-2"></i><span id="weather-title">Weather Integration</span></h5>
+                        <p class="card-text" id="weather-text">Automatically fetch current weather conditions based on your location to provide accurate recommendations.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-mic me-2"></i><span id="voice-title">Voice Input & Output</span></h5>
+                        <p class="card-text" id="voice-text">Speak to input your data and receive recommendations using our voice-enabled interface in multiple languages.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-graph-up me-2"></i><span id="ml-title">AI-Powered Predictions</span></h5>
+                        <p class="card-text" id="ml-text">Our machine learning model analyzes soil properties and environmental conditions to recommend the best crops.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Images Banner -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card bg-dark">
+                    <div class="card-body p-0">
+                        <div class="d-flex flex-nowrap overflow-auto">
+                            <img src="https://pixabay.com/get/g2240f6ea98ecbd790f668649e01e13905de648ffffd937c6864fd61fdee1ad62eb0e1571093e17a5dbf818c474fe28fe467855c3c1e5d2ff7f1e300386706a18_1280.jpg" 
+                                 class="img-banner" alt="Crop field">
+                            <img src="https://pixabay.com/get/ge3f92ad5cd2e7116f38936d5f5d4ef50ffe8f70092916b95867665da649e87ee9fb8f49184bdfd4005583461e6ca29bc606dec8fd116ae6878dd637f0d4c677f_1280.jpg" 
+                                 class="img-banner" alt="Weather and agriculture">
+                            <img src="https://pixabay.com/get/gcc72e318ca1c6397e765d4791b92ce000b307d9cfe74911f436e053c392c3243b4b1fdcb79aa9cadb671e4974c6b1269502aa5001a71d38bb763423f8f5a7470_1280.jpg" 
+                                 class="img-banner" alt="Soil types">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer mt-auto py-3 bg-dark">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <span class="text-muted"></span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Info Modal -->
+    <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="infoModalLabel">About Crop Recommendation System</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5 id="about-system-title">How This System Works</h5>
+                    <p id="about-system-text">This crop recommendation system uses a machine learning model trained on thousands of agricultural data points to suggest the most suitable crops for your specific conditions. The model analyzes soil nutrients (N, P, K), environmental factors (temperature, humidity, rainfall), and soil properties (pH, soil type) to make accurate predictions.</p>
+                    
+                    <h5 id="about-features-title">Key Features</h5>
+                    <ul>
+                        <li id="feature-1">Voice input and output in multiple languages (English, Hindi, Marathi)</li>
+                        <li id="feature-2">Real-time weather data integration based on your location</li>
+                        <li id="feature-3">Advanced machine learning algorithm for accurate predictions</li>
+                        <li id="feature-4">Alternative crop suggestions with confidence scores</li>
+                    </ul>
+                    
+                    <h5 id="about-soil-title">Understanding Soil Types</h5>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card mb-3">
+                                <img src="https://pixabay.com/get/g1a32674a1c86da058fedf183102ad7c4febb8e16767a9b04e6deeb04add50f50784c737e0e6e1ccbe7ba04650229adce_1280.jpg" class="card-img-top" alt="Sandy soil">
+                                <div class="card-body">
+                                    <h5 class="card-title" id="sandy-title">Sandy Soil</h5>
+                                    <p class="card-text" id="sandy-text">Light, warm and dry soil with high drainage and low nutrient content.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-3">
+                                <img src="https://pixabay.com/get/g6a6e66b49e7fcfddacd0f8eda8d8bb8a369df3b026016e8c27fa83939d4317542cc5ecab976e4d8f1dd17bfd66629b7f200e99a5796b451f2132733a1453903d_1280.jpg" class="card-img-top" alt="Loamy soil">
+                                <div class="card-body">
+                                    <h5 class="card-title" id="loamy-title">Loamy Soil</h5>
+                                    <p class="card-text" id="loamy-text">Balanced mixture of sand, silt and clay with good drainage and nutrient retention.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-3">
+                                <img src="https://pixabay.com/get/g03d72c755c7e87f72b5a1b43ba92c980ff15a840f27c5a804a57f161ef5937c8735f6a92d8c77798c7a08fb41d2bd479540978f8318009dddf8ebda7156c3991_1280.jpg" class="card-img-top" alt="Clay soil">
+                                <div class="card-body">
+                                    <h5 class="card-title" id="clay-title">Clay Soil</h5>
+                                    <p class="card-text" id="clay-text">Heavy, nutrient-rich soil with poor drainage that retains moisture well.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close-modal-btn">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/translations.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            updateAllTranslations();
+        });
+    </script>
+</body>
+</html>

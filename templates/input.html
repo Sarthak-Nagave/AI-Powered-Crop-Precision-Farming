@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Recommendation - Input Form</title>
+    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.svg') }}" type="image/svg+xml">
+</head>
+<body>
+    <!-- Header -->
+    <header class="py-3 mb-4 border-bottom">
+        <div class="container d-flex flex-wrap justify-content-center">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">
+                <i class="bi bi-flower1 fs-3 me-2"></i>
+                <span class="fs-4">Crop Recommendation System</span>
+            </a>
+            <div class="language-selector">
+                <div class="btn-group" role="group" aria-label="Language selector">
+                    <button type="button" class="btn btn-sm btn-outline-secondary active" onclick="changeLanguage('en')">English</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="changeLanguage('hi')">हिंदी</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="changeLanguage('mr')">मराठी</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mb-5">
+        <!-- Input Form -->
+        <div class="card mb-4" id="input-form">
+            <div class="card-header bg-primary-subtle">
+                <h3 class="my-2" id="form-title">Enter Your Field Data</h3>
+            </div>
+            <div class="card-body">
+                <form id="crop-form" action="/predict" method="post" class="needs-validation" novalidate>
+                    <!-- Soil Nutrients Section -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h4 id="soil-nutrients-title">Soil Nutrients</h4>
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label for="nitrogen" class="form-label" id="nitrogen-label">Nitrogen (N) in kg/ha</label>
+                                    <input type="number" class="form-control" id="nitrogen" name="nitrogen" placeholder="0-150" min="0" max="150" required>
+                                    <div class="invalid-feedback" id="nitrogen-feedback">Please enter a valid nitrogen value (0-150 kg/ha).</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="phosphorus" class="form-label" id="phosphorus-label">Phosphorus (P) in kg/ha</label>
+                                    <input type="number" class="form-control" id="phosphorus" name="phosphorus" placeholder="0-150" min="0" max="150" required>
+                                    <div class="invalid-feedback" id="phosphorus-feedback">Please enter a valid phosphorus value (0-150 kg/ha).</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="potassium" class="form-label" id="potassium-label">Potassium (K) in kg/ha</label>
+                                    <input type="number" class="form-control" id="potassium" name="potassium" placeholder="0-200" min="0" max="200" required>
+                                    <div class="invalid-feedback" id="potassium-feedback">Please enter a valid potassium value (0-200 kg/ha).</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Environmental Conditions -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h4 id="env-conditions-title">Environmental Conditions</h4>
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label for="soil-type" class="form-label" id="soil-type-label">Soil Type</label>
+                                    <select class="form-select" id="soil-type" required>
+                                        <option value="" selected disabled id="soil-type-placeholder">Select soil type</option>
+                                        <option value="sandy">Sandy</option>
+                                        <option value="loamy">Loamy</option>
+                                        <option value="clay">Clay</option>
+                                    </select>
+                                    <div class="invalid-feedback" id="soil-type-feedback">Please select a soil type.</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="ph" class="form-label" id="ph-label">pH Value</label>
+                                    <input type="number" class="form-control" id="ph" step="0.1" placeholder="0-14" min="0" max="14" required>
+                                    <div class="invalid-feedback" id="ph-feedback">Please enter a valid pH value (0-14).</div>
+                                </div>
+                            </div>
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label for="temperature" class="form-label" id="temperature-label">Temperature (°C)</label>
+                                    <input type="number" class="form-control" id="temperature" step="0.1" placeholder="0-50" min="0" max="50" required>
+                                    <div class="invalid-feedback" id="temperature-feedback">Please enter a valid temperature (0-50°C).</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="humidity" class="form-label" id="humidity-label">Humidity (%)</label>
+                                    <input type="number" class="form-control" id="humidity" placeholder="0-100" min="0" max="100" required>
+                                    <div class="invalid-feedback" id="humidity-feedback">Please enter a valid humidity value (0-100%).</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="rainfall" class="form-label" id="rainfall-label">Rainfall (mm)</label>
+                                    <input type="number" class="form-control" id="rainfall" placeholder="0-300" min="0" max="300" required>
+                                    <div class="invalid-feedback" id="rainfall-feedback">Please enter a valid rainfall amount (0-300 mm).</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Location and Weather -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h4 id="location-title">Location & Weather</h4>
+                            <div class="alert alert-info" role="alert" id="location-info">
+                                <i class="bi bi-info-circle me-2"></i>
+                                <span id="location-info-text">Click "Get My Location" to automatically fill weather data based on your current location.</span>
+                            </div>
+                            
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-4">
+                                    <label for="latitude" class="form-label" id="latitude-label">Latitude</label>
+                                    <input type="number" class="form-control" id="latitude" step="0.000001" placeholder="e.g., 28.7041">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="longitude" class="form-label" id="longitude-label">Longitude</label>
+                                    <input type="number" class="form-control" id="longitude" step="0.000001" placeholder="e.g., 77.1025">
+                                </div>
+                                <div class="col-md-4 d-flex align-items-end">
+                                    <button type="button" class="btn btn-secondary w-100" id="location-btn" onclick="getLocation()">
+                                        <i class="bi bi-geo-alt me-2"></i><span id="get-location-text">Get My Location</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3" id="weather-data-container" style="display: none;">
+                                <div class="col-12">
+                                    <div class="card bg-dark-subtle">
+                                        <div class="card-body">
+                                            <h5 class="card-title" id="weather-data-title">Current Weather</h5>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <p><i class="bi bi-thermometer-half me-2"></i> <span id="weather-temp-label">Temperature</span>: <span id="weather-temperature">--</span> °C</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p><i class="bi bi-droplet me-2"></i> <span id="weather-humidity-label">Humidity</span>: <span id="weather-humidity">--</span> %</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p><i class="bi bi-cloud me-2"></i> <span id="weather-condition-label">Condition</span>: <span id="weather-condition">--</span></p>
+                                                </div>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="use-weather-data" checked>
+                                                <label class="form-check-label" for="use-weather-data" id="use-weather-label">
+                                                    Use this weather data for prediction
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Voice Input Section -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="card bg-secondary-subtle">
+                                <div class="card-body">
+                                    <h5 class="card-title" id="voice-input-title">Voice Input</h5>
+                                    <p class="card-text" id="voice-instructions">Click the microphone button and speak the values for each field.</p>
+                                    
+                                    <div class="d-flex justify-content-center mb-3">
+                                        <button type="button" class="btn btn-lg btn-outline-danger me-2" id="start-voice-btn" onclick="startVoiceInput()">
+                                            <i class="bi bi-mic-fill"></i> <span id="start-voice-text">Start Voice Input</span>
+                                        </button>
+                                        <button type="button" class="btn btn-lg btn-outline-secondary" id="stop-voice-btn" onclick="stopVoiceInput()" disabled>
+                                            <i class="bi bi-stop-fill"></i> <span id="stop-voice-text">Stop</span>
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="voice-status p-2 rounded text-center mb-2" id="voice-status">
+                                        <span id="voice-status-text">Ready for voice input</span>
+                                    </div>
+                                    
+                                    <div class="voice-transcript p-2 rounded d-none" id="voice-transcript">
+                                        <strong id="transcript-label">Recognized Speech:</strong>
+                                        <p id="transcript-text"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Form Buttons -->
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="button" class="btn btn-outline-secondary" onclick="resetForm()" id="reset-btn">
+                            <i class="bi bi-arrow-counterclockwise me-1"></i><span id="reset-text">Reset</span>
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="predict-btn">
+                            <i class="bi bi-search me-1"></i><span id="predict-text">Get Recommendation</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer mt-auto py-3 bg-dark">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <span class="text-muted"></span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/translations.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/voice.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/weather.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
