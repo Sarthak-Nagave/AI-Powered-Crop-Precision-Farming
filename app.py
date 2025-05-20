@@ -136,17 +136,26 @@ def predict():
             # For form submission, render the results page
             data = request.form
             
-            # Extract features
-            features = {
-                'N': float(data.get('nitrogen')),
-                'P': float(data.get('phosphorus')),
-                'K': float(data.get('potassium')),
-                'temperature': float(data.get('temperature')),
-                'humidity': float(data.get('humidity')),
-                'ph': float(data.get('ph')),
-                'rainfall': float(data.get('rainfall')),
-                'soil_type': data.get('soil_type')
-            }
+            # Log request form data
+            logger.info(f"Form data received: {data}")
+            
+            try:
+                # Extract features
+                features = {
+                    'N': float(data.get('nitrogen', 0)),
+                    'P': float(data.get('phosphorus', 0)),
+                    'K': float(data.get('potassium', 0)),
+                    'temperature': float(data.get('temperature', 25)),
+                    'humidity': float(data.get('humidity', 60)),
+                    'ph': float(data.get('ph', 7)),
+                    'rainfall': float(data.get('rainfall', 100)),
+                    'soil_type': data.get('soil_type', 'loamy')
+                }
+                
+                logger.info(f"Extracted features: {features}")
+            except Exception as e:
+                logger.error(f"Error extracting features: {e}")
+                return render_template('input.html', error="Please fill all required fields with valid data")
             
             # Preprocess input
             X = preprocess_input(features, scaler, onehot_encoder)
@@ -175,7 +184,10 @@ def predict():
         
     except Exception as e:
         logger.error(f"Error making prediction: {e}")
-        return jsonify({"error": f"Error: {str(e)}"}), 500
+        if request.content_type == 'application/json':
+            return jsonify({"error": f"Error: {str(e)}"}), 500
+        else:
+            return render_template('input.html', error="An error occurred while making the prediction. Please try again.")
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
