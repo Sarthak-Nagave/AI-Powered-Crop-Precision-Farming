@@ -1,138 +1,154 @@
-// Get user's location
+// Get the user's current location using Geolocation API
 function getLocation() {
+    // Check if geolocation is supported by the browser
     if (navigator.geolocation) {
-        // Show loading indicator
         document.getElementById('location-btn').innerHTML = `
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            <span>${getTranslation('get_location_text')}...</span>
+            <span>Getting location...</span>
         `;
-        document.getElementById('location-btn').disabled = true;
         
-        // Get location
-        navigator.geolocation.getCurrentPosition(showPosition, handleLocationError, {
-            enableHighAccuracy: true,
-            timeout: 10000,
-            maximumAge: 0
-        });
+        // Get current position
+        navigator.geolocation.getCurrentPosition(showPosition, handleLocationError);
     } else {
-        alert(getTranslation('geolocation_not_supported'));
+        alert("Geolocation is not supported by this browser.");
+        document.getElementById('location-btn').innerHTML = `
+            <i class="bi bi-geo-alt me-2"></i><span id="get-location-text">Get My Location</span>
+        `;
     }
 }
 
-// Show position and fetch weather data
+// Process and display position data
 function showPosition(position) {
+    // Get coordinates
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
     
-    // Update form fields
-    document.getElementById('latitude').value = latitude.toFixed(6);
-    document.getElementById('longitude').value = longitude.toFixed(6);
+    // Fill location fields
+    document.getElementById('latitude').value = latitude;
+    document.getElementById('longitude').value = longitude;
     
-    // Fetch weather data
+    // Fetch weather data based on coordinates
     fetchWeatherData(latitude, longitude);
+    
+    // Reset button text
+    document.getElementById('location-btn').innerHTML = `
+        <i class="bi bi-geo-alt me-2"></i><span id="get-location-text">Get My Location</span>
+    `;
+    
+    // Update translation for the button text
+    if (typeof updateElementText === 'function') {
+        updateElementText('get-location-text');
+    }
 }
 
-// Handle geolocation error
+// Handle location errors
 function handleLocationError(error) {
     let errorMessage;
     
     switch(error.code) {
         case error.PERMISSION_DENIED:
-            errorMessage = getTranslation('location_denied');
+            errorMessage = "User denied the request for geolocation. Please enable location services in your browser settings.";
             break;
         case error.POSITION_UNAVAILABLE:
-            errorMessage = getTranslation('location_unavailable');
+            errorMessage = "Location information is unavailable. Please try again.";
             break;
         case error.TIMEOUT:
-            errorMessage = getTranslation('location_timeout');
+            errorMessage = "The request to get user location timed out. Please try again.";
             break;
-        default:
-            errorMessage = getTranslation('location_error');
+        case error.UNKNOWN_ERROR:
+            errorMessage = "An unknown error occurred while trying to get location. Please try again.";
+            break;
     }
     
     alert(errorMessage);
     
-    // Reset button state
+    // Reset button text
     document.getElementById('location-btn').innerHTML = `
-        <i class="bi bi-geo-alt me-2"></i><span id="get-location-text">${getTranslation('get_location_text')}</span>
+        <i class="bi bi-geo-alt me-2"></i><span id="get-location-text">Get My Location</span>
     `;
-    document.getElementById('location-btn').disabled = false;
+    
+    // Update translation for the button text
+    if (typeof updateElementText === 'function') {
+        updateElementText('get-location-text');
+    }
 }
 
 // Fetch weather data from API
 function fetchWeatherData(latitude, longitude) {
+    // Show weather loading state
+    document.getElementById('weather-data-container').innerHTML = `
+        <div class="text-center p-4">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2">Loading weather data...</p>
+        </div>
+    `;
+    
+    // Make the container visible
+    document.getElementById('weather-data-container').style.display = 'block';
+    
+    // Send request to backend
     fetch('/get_weather', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ latitude, longitude })
+        body: JSON.stringify({
+            latitude: latitude,
+            longitude: longitude
+        })
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Weather API response was not ok');
+            throw new Error('Weather API request failed');
         }
         return response.json();
     })
     .then(data => {
-        // Update weather data display
-        document.getElementById('weather-temperature').textContent = data.temperature.toFixed(1);
-        document.getElementById('weather-humidity').textContent = data.humidity;
-        document.getElementById('weather-condition').textContent = data.description;
+        // Fill weather data in the form
+        document.getElementById('temperature').value = data.temperature;
+        document.getElementById('humidity').value = data.humidity;
         
-        // Show weather data container
-        document.getElementById('weather-data-container').style.display = 'block';
+        // Display weather data in the container
+        document.getElementById('weather-data-container').innerHTML = `
+            <div class="card-body">
+                <h5 class="card-title" id="weather-data-title">Current Weather</h5>
+                <div class="row">
+                    <div class="col-md-4">
+                        <p><strong id="weather-temp-label">Temperature</strong>: ${data.temperature} °C</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><strong id="weather-humidity-label">Humidity</strong>: ${data.humidity}%</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><strong id="weather-condition-label">Condition</strong>: ${data.weather_condition}</p>
+                    </div>
+                </div>
+                <p class="text-muted">${data.description}</p>
+            </div>
+        `;
         
-        // If checkbox is checked, update form fields with weather data
-        if (document.getElementById('use-weather-data').checked) {
-            document.getElementById('temperature').value = data.temperature.toFixed(1);
-            document.getElementById('humidity').value = data.humidity;
+        // Update translations for weather data labels
+        if (typeof updateElementText === 'function') {
+            updateElementText('weather-data-title');
+            updateElementText('weather-temp-label');
+            updateElementText('weather-humidity-label');
+            updateElementText('weather-condition-label');
         }
-        
-        // Add event listener to checkbox
-        document.getElementById('use-weather-data').addEventListener('change', function() {
-            if (this.checked) {
-                document.getElementById('temperature').value = data.temperature.toFixed(1);
-                document.getElementById('humidity').value = data.humidity;
-            }
-        });
     })
     .catch(error => {
-        console.error('Error fetching weather data:', error);
-        alert(getTranslation('weather_error'));
-    })
-    .finally(() => {
-        // Reset button state
-        document.getElementById('location-btn').innerHTML = `
-            <i class="bi bi-geo-alt me-2"></i><span id="get-location-text">${getTranslation('get_location_text')}</span>
+        console.error('Error:', error);
+        
+        // Display error message
+        document.getElementById('weather-data-container').innerHTML = `
+            <div class="alert alert-danger" role="alert">
+                <h5>Error loading weather data</h5>
+                <p>${error.message}</p>
+                <button type="button" class="btn btn-sm btn-outline-danger mt-2" onclick="getLocation()">
+                    <i class="bi bi-arrow-clockwise me-1"></i>Try Again
+                </button>
+            </div>
         `;
-        document.getElementById('location-btn').disabled = false;
     });
-}
-
-// Add translations for weather-related messages
-if (!translations.en.geolocation_not_supported) {
-    translations.en.geolocation_not_supported = "Geolocation is not supported by this browser.";
-    translations.hi.geolocation_not_supported = "यह ब्राउज़र जियोलोकेशन का समर्थन नहीं करता है।";
-    translations.mr.geolocation_not_supported = "या ब्राउझरद्वारे जिओलोकेशन समर्थित नाही.";
-    
-    translations.en.location_denied = "User denied the request for geolocation.";
-    translations.hi.location_denied = "उपयोगकर्ता ने जियोलोकेशन के लिए अनुरोध से इनकार कर दिया।";
-    translations.mr.location_denied = "वापरकर्त्याने जिओलोकेशनच्या विनंतीस नकार दिला.";
-    
-    translations.en.location_unavailable = "Location information is unavailable.";
-    translations.hi.location_unavailable = "स्थान की जानकारी उपलब्ध नहीं है।";
-    translations.mr.location_unavailable = "स्थान माहिती उपलब्ध नाही.";
-    
-    translations.en.location_timeout = "The request to get user location timed out.";
-    translations.hi.location_timeout = "उपयोगकर्ता का स्थान प्राप्त करने का अनुरोध समय समाप्त हो गया।";
-    translations.mr.location_timeout = "वापरकर्ता स्थान मिळविण्याची विनंती टाइमआउट झाली.";
-    
-    translations.en.location_error = "An unknown error occurred while retrieving location.";
-    translations.hi.location_error = "स्थान प्राप्त करते समय एक अज्ञात त्रुटि हुई।";
-    translations.mr.location_error = "स्थान मिळवताना एक अज्ञात त्रुटी आली.";
-    
-    translations.en.weather_error = "Could not fetch weather data. Please try again.";
-    translations.hi.weather_error = "मौसम डेटा प्राप्त नहीं कर सका। कृपया पुनः प्रयास करें।";
-    translations.mr.weather_error = "हवामान डेटा आणू शकलो नाही. कृपया पुन्हा प्रयत्न करा.";
 }
