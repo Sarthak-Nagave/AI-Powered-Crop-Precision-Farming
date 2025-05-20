@@ -1,0 +1,82 @@
+/* General Styles */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+.footer {
+    margin-top: auto;
+}
+
+/* Image Banner Styles */
+.img-banner {
+    height: 200px;
+    object-fit: cover;
+    margin-right: 2px;
+}
+
+/* Voice Input Styles */
+.voice-status {
+    background-color: var(--bs-secondary-bg);
+    min-height: 40px;
+}
+
+.voice-transcript {
+    background-color: var(--bs-secondary-bg);
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+/* Listening animation */
+.listening {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        background-color: var(--bs-secondary-bg);
+    }
+    50% {
+        background-color: var(--bs-danger-bg-subtle);
+    }
+    100% {
+        background-color: var(--bs-secondary-bg);
+    }
+}
+
+/* Alternative Crops List */
+#alternative-crops .progress {
+    height: 25px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bs-secondary-bg-subtle);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--bs-secondary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--bs-dark);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .img-banner {
+        height: 150px;
+    }
+}

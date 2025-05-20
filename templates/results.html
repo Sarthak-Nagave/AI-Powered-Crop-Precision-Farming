@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Recommendation Results</title>
+    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.svg') }}" type="image/svg+xml">
+</head>
+<body>
+    <!-- Header -->
+    <header class="py-3 mb-4 border-bottom">
+        <div class="container d-flex flex-wrap justify-content-center">
+            <span class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">
+                <i class="bi bi-flower1 fs-3 me-2"></i>
+                <span class="fs-4">Crop Recommendation System</span>
+            </span>
+            <div class="language-selector">
+                <div class="btn-group" role="group" aria-label="Language selector">
+                    <button type="button" class="btn btn-sm btn-outline-secondary active" onclick="changeLanguage('en')">English</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="changeLanguage('hi')">हिंदी</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="changeLanguage('mr')">मराठी</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mb-5">
+        <!-- Results Card -->
+        <div class="card mb-4">
+            <div class="card-header bg-success-subtle">
+                <h3 class="my-2">Crop Recommendation Results</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="text-center mb-4">
+                            <div class="display-1 mb-2">
+                                <i class="bi bi-check-circle-fill text-success"></i>
+                            </div>
+                            <h4>Best Crop for Your Field</h4>
+                            <h2 class="display-5 fw-bold">{{ predicted_crop }}</h2>
+                            <button type="button" class="btn btn-sm btn-outline-primary mt-2" onclick="speakResult()">
+                                <i class="bi bi-volume-up me-1"></i>Speak Result
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>Alternative Crops</h4>
+                        <ul class="list-group">
+                            {% for crop in alternative_crops %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {{ crop.crop }}
+                                <span class="badge bg-primary rounded-pill">{{ crop.probability }}%</span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                
+                <hr>
+                
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <h4>Input Summary</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="list-group mb-3">
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Nitrogen (N):</span>
+                                        <span>{{ input_data.nitrogen }} kg/ha</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Phosphorus (P):</span>
+                                        <span>{{ input_data.phosphorus }} kg/ha</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Potassium (K):</span>
+                                        <span>{{ input_data.potassium }} kg/ha</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>pH Value:</span>
+                                        <span>{{ input_data.ph }}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="list-group mb-3">
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Temperature:</span>
+                                        <span>{{ input_data.temperature }} °C</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Humidity:</span>
+                                        <span>{{ input_data.humidity }}%</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Rainfall:</span>
+                                        <span>{{ input_data.rainfall }} mm</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span>Soil Type:</span>
+                                        <span>{{ input_data.soil_type }}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+                    <a href="/" class="btn btn-primary">
+                        <i class="bi bi-plus-circle me-1"></i>New Prediction
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer mt-auto py-3 bg-dark">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <span class="text-muted">© 2023 Crop Recommendation System</span>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <span class="text-muted">For educational purposes only. Always consult with agricultural experts.</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function speakResult() {
+            const resultText = "The best crop for your field is {{ predicted_crop }}";
+            const utterance = new SpeechSynthesisUtterance(resultText);
+            speechSynthesis.speak(utterance);
+        }
+    </script>
+</body>
+</html>

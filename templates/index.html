@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Recommendation System</title>
+    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.svg') }}" type="image/svg+xml">
+</head>
+<body>
+    <!-- Header -->
+    <header class="py-3 mb-4 border-bottom">
+        <div class="container d-flex flex-wrap justify-content-center">
+            <span class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">
+                <i class="bi bi-flower1 fs-3 me-2"></i>
+                <span class="fs-4">Crop Recommendation System</span>
+            </span>
+            <div class="language-selector">
+                <div class="btn-group" role="group" aria-label="Language selector">
+                    <button type="button" class="btn btn-sm btn-outline-secondary active" onclick="changeLanguage('en')">English</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="changeLanguage('hi')">हिंदी</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="changeLanguage('mr')">मराठी</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mb-5">
+        <!-- Hero Section -->
+        <div class="p-4 p-md-5 mb-4 rounded bg-dark-subtle">
+            <div class="row">
+                <div class="col-md-7">
+                    <h1 class="display-5 fw-bold" id="hero-title">Find the perfect crop for your field</h1>
+                    <p class="lead my-3" id="hero-subtitle">Get accurate crop recommendations based on soil and climate conditions using our advanced machine learning model.</p>
+                    <div class="d-grid gap-2 d-md-flex">
+                        <button class="btn btn-primary" onclick="scrollToForm()" id="get-started-btn">Get Started</button>
+                        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#infoModal" id="learn-more-btn">Learn More</button>
+                    </div>
+                </div>
+                <div class="col-md-5 d-flex align-items-center justify-content-center">
+                    <div class="ratio ratio-16x9 w-100">
+                        <img src="https://pixabay.com/get/g43d7fc4f496e79253882267d4fa9809e94dc0fee477b08ab4d847bd13db58e7bc8f53aa43b16f6e9f70548674c2f6e354d40fdcd44c81d6e3cef94362d45d85a_1280.jpg" 
+                             class="img-fluid rounded" alt="Crop farming">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Cards -->
+        <div class="row mb-4 g-4">
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-cloud-sun me-2"></i><span id="weather-title">Weather Integration</span></h5>
+                        <p class="card-text" id="weather-text">Automatically fetch current weather conditions based on your location to provide accurate recommendations.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-mic me-2"></i><span id="voice-title">Voice Input & Output</span></h5>
+                        <p class="card-text" id="voice-text">Speak to input your data and receive recommendations using our voice-enabled interface in multiple languages.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-graph-up me-2"></i><span id="ml-title">AI-Powered Predictions</span></h5>
+                        <p class="card-text" id="ml-text">Our machine learning model analyzes soil properties and environmental conditions to recommend the best crops.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Images Banner -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card bg-dark">
+                    <div class="card-body p-0">
+                        <div class="d-flex flex-nowrap overflow-auto">
+                            <img src="https://pixabay.com/get/g2240f6ea98ecbd790f668649e01e13905de648ffffd937c6864fd61fdee1ad62eb0e1571093e17a5dbf818c474fe28fe467855c3c1e5d2ff7f1e300386706a18_1280.jpg" 
+                                 class="img-banner" alt="Crop field">
+                            <img src="https://pixabay.com/get/ge3f92ad5cd2e7116f38936d5f5d4ef50ffe8f70092916b95867665da649e87ee9fb8f49184bdfd4005583461e6ca29bc606dec8fd116ae6878dd637f0d4c677f_1280.jpg" 
+                                 class="img-banner" alt="Weather and agriculture">
+                            <img src="https://pixabay.com/get/gcc72e318ca1c6397e765d4791b92ce000b307d9cfe74911f436e053c392c3243b4b1fdcb79aa9cadb671e4974c6b1269502aa5001a71d38bb763423f8f5a7470_1280.jpg" 
+                                 class="img-banner" alt="Soil types">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Form -->
+        <div class="card mb-4" id="input-form">
+            <div class="card-header bg-primary-subtle">
+                <h3 class="my-2" id="form-title">Enter Your Field Data</h3>
+            </div>
+            <div class="card-body">
+                <form id="crop-form" class="needs-validation" novalidate>
+                    <!-- Soil Nutrients Section -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h4 id="soil-nutrients-title">Soil Nutrients</h4>
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label for="nitrogen" class="form-label" id="nitrogen-label">Nitrogen (N) in kg/ha</label>
+                                    <input type="number" class="form-control" id="nitrogen" placeholder="0-150" min="0" max="150" required>
+                                    <div class="invalid-feedback" id="nitrogen-feedback">Please enter a valid nitrogen value (0-150 kg/ha).</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="phosphorus" class="form-label" id="phosphorus-label">Phosphorus (P) in kg/ha</label>
+                                    <input type="number" class="form-control" id="phosphorus" placeholder="0-150" min="0" max="150" required>
+                                    <div class="invalid-feedback" id="phosphorus-feedback">Please enter a valid phosphorus value (0-150 kg/ha).</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="potassium" class="form-label" id="potassium-label">Potassium (K) in kg/ha</label>
+                                    <input type="number" class="form-control" id="potassium" placeholder="0-200" min="0" max="200" required>
+                                    <div class="invalid-feedback" id="potassium-feedback">Please enter a valid potassium value (0-200 kg/ha).</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Environmental Conditions -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h4 id="env-conditions-title">Environmental Conditions</h4>
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label for="soil-type" class="form-label" id="soil-type-label">Soil Type</label>
+                                    <select class="form-select" id="soil-type" required>
+                                        <option value="" selected disabled id="soil-type-placeholder">Select soil type</option>
+                                        <option value="sandy">Sandy</option>
+                                        <option value="loamy">Loamy</option>
+                                        <option value="clay">Clay</option>
+                                    </select>
+                                    <div class="invalid-feedback" id="soil-type-feedback">Please select a soil type.</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="ph" class="form-label" id="ph-label">pH Value</label>
+                                    <input type="number" class="form-control" id="ph" step="0.1" placeholder="0-14" min="0" max="14" required>
+                                    <div class="invalid-feedback" id="ph-feedback">Please enter a valid pH value (0-14).</div>
+                                </div>
+                            </div>
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label for="temperature" class="form-label" id="temperature-label">Temperature (°C)</label>
+                                    <input type="number" class="form-control" id="temperature" step="0.1" placeholder="0-50" min="0" max="50" required>
+                                    <div class="invalid-feedback" id="temperature-feedback">Please enter a valid temperature (0-50°C).</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="humidity" class="form-label" id="humidity-label">Humidity (%)</label>
+                                    <input type="number" class="form-control" id="humidity" placeholder="0-100" min="0" max="100" required>
+                                    <div class="invalid-feedback" id="humidity-feedback">Please enter a valid humidity value (0-100%).</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="rainfall" class="form-label" id="rainfall-label">Rainfall (mm)</label>
+                                    <input type="number" class="form-control" id="rainfall" placeholder="0-300" min="0" max="300" required>
+                                    <div class="invalid-feedback" id="rainfall-feedback">Please enter a valid rainfall amount (0-300 mm).</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Location and Weather -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h4 id="location-title">Location & Weather</h4>
+                            <div class="alert alert-info" role="alert" id="location-info">
+                                <i class="bi bi-info-circle me-2"></i>
+                                <span id="location-info-text">Click "Get My Location" to automatically fill weather data based on your current location.</span>
+                            </div>
+                            
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-4">
+                                    <label for="latitude" class="form-label" id="latitude-label">Latitude</label>
+                                    <input type="number" class="form-control" id="latitude" step="0.000001" placeholder="e.g., 28.7041">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="longitude" class="form-label" id="longitude-label">Longitude</label>
+                                    <input type="number" class="form-control" id="longitude" step="0.000001" placeholder="e.g., 77.1025">
+                                </div>
+                                <div class="col-md-4 d-flex align-items-end">
+                                    <button type="button" class="btn btn-secondary w-100" id="location-btn" onclick="getLocation()">
+                                        <i class="bi bi-geo-alt me-2"></i><span id="get-location-text">Get My Location</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3" id="weather-data-container" style="display: none;">
+                                <div class="col-12">
+                                    <div class="card bg-dark-subtle">
+                                        <div class="card-body">
+                                            <h5 class="card-title" id="weather-data-title">Current Weather</h5>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <p><i class="bi bi-thermometer-half me-2"></i> <span id="weather-temp-label">Temperature</span>: <span id="weather-temperature">--</span> °C</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p><i class="bi bi-droplet me-2"></i> <span id="weather-humidity-label">Humidity</span>: <span id="weather-humidity">--</span> %</p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p><i class="bi bi-cloud me-2"></i> <span id="weather-condition-label">Condition</span>: <span id="weather-condition">--</span></p>
+                                                </div>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="use-weather-data" checked>
+                                                <label class="form-check-label" for="use-weather-data" id="use-weather-label">
+                                                    Use this weather data for prediction
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Voice Input Section -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="card bg-secondary-subtle">
+                                <div class="card-body">
+                                    <h5 class="card-title" id="voice-input-title">Voice Input</h5>
+                                    <p class="card-text" id="voice-instructions">Click the microphone button and speak the values for each field.</p>
+                                    
+                                    <div class="d-flex justify-content-center mb-3">
+                                        <button type="button" class="btn btn-lg btn-outline-primary me-2" id="start-voice-btn" onclick="startVoiceInput()">
+                                            <i class="bi bi-mic-fill"></i> <span id="start-voice-text">Start Voice Input</span>
+                                        </button>
+                                        <button type="button" class="btn btn-lg btn-outline-danger" id="stop-voice-btn" onclick="stopVoiceInput()" disabled>
+                                            <i class="bi bi-mic-mute-fill"></i> <span id="stop-voice-text">Stop</span>
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="voice-status mb-2 p-2 rounded text-center" id="voice-status">
+                                        <span id="voice-status-text">Ready for voice input</span>
+                                    </div>
+                                    
+                                    <div id="voice-transcript" class="p-2 rounded voice-transcript d-none">
+                                        <p><strong id="transcript-label">Recognized Speech:</strong></p>
+                                        <p id="transcript-text"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Section -->
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="button" class="btn btn-outline-secondary" id="reset-btn" onclick="resetForm()">
+                            <i class="bi bi-arrow-repeat me-1"></i><span id="reset-text">Reset</span>
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="predict-btn">
+                            <i class="bi bi-search me-1"></i><span id="predict-text">Get Recommendation</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Results Section (initially hidden) -->
+        <div id="results-section" class="card mb-4" style="display: none;">
+            <div class="card-header bg-success-subtle">
+                <h3 class="my-2" id="results-title">Crop Recommendation Results</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="text-center mb-4">
+                            <div class="display-1 mb-2">
+                                <i class="bi bi-check-circle-fill text-success"></i>
+                            </div>
+                            <h4 id="best-crop-label">Best Crop for Your Field</h4>
+                            <h2 class="display-5 fw-bold" id="predicted-crop">--</h2>
+                            <button type="button" class="btn btn-sm btn-outline-primary mt-2" id="speak-result-btn" onclick="speakResult()">
+                                <i class="bi bi-volume-up me-1"></i><span id="speak-result-text">Speak Result</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h4 id="alternatives-label">Alternative Crops</h4>
+                        <div id="alternative-crops">
+                            <!-- Alternative crops will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <hr>
+                
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <h4 id="input-summary-label">Input Summary</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="list-group mb-3">
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span id="summary-n-label">Nitrogen (N):</span>
+                                        <span id="summary-nitrogen">--</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span id="summary-p-label">Phosphorus (P):</span>
+                                        <span id="summary-phosphorus">--</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span id="summary-k-label">Potassium (K):</span>
+                                        <span id="summary-potassium">--</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span id="summary-ph-label">pH Value:</span>
+                                        <span id="summary-ph">--</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="list-group mb-3">
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span id="summary-temp-label">Temperature:</span>
+                                        <span id="summary-temperature">--</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span id="summary-humidity-label">Humidity:</span>
+                                        <span id="summary-humidity">--</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span id="summary-rainfall-label">Rainfall:</span>
+                                        <span id="summary-rainfall">--</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span id="summary-soil-label">Soil Type:</span>
+                                        <span id="summary-soil-type">--</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+                    <button type="button" class="btn btn-outline-secondary" id="back-btn" onclick="hideResults()">
+                        <i class="bi bi-arrow-left me-1"></i><span id="back-text">Back to Form</span>
+                    </button>
+                    <button type="button" class="btn btn-primary" id="new-prediction-btn" onclick="resetForm(); hideResults()">
+                        <i class="bi bi-plus-circle me-1"></i><span id="new-prediction-text">New Prediction</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Model Performance Metrics -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="my-2" id="metrics-title">Model Performance Metrics</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="card h-100 text-center">
+                            <div class="card-body">
+                                <h5 class="card-title" id="accuracy-label">Accuracy</h5>
+                                <p class="display-6">{{ metrics.accuracy }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="card h-100 text-center">
+                            <div class="card-body">
+                                <h5 class="card-title" id="precision-label">Precision</h5>
+                                <p class="display-6">{{ metrics.precision }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="card h-100 text-center">
+                            <div class="card-body">
+                                <h5 class="card-title" id="recall-label">Recall</h5>
+                                <p class="display-6">{{ metrics.recall }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="card h-100 text-center">
+                            <div class="card-body">
+                                <h5 class="card-title" id="f1-label">F1 Score</h5>
+                                <p class="display-6">{{ metrics.f1 }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Info Modal -->
+    <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="infoModalLabel">About Crop Recommendation System</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h5 id="about-system-title">How This System Works</h5>
+                    <p id="about-system-text">This crop recommendation system uses a machine learning model trained on thousands of agricultural data points to suggest the most suitable crops for your specific conditions. The model analyzes soil nutrients (N, P, K), environmental factors (temperature, humidity, rainfall), and soil properties (pH, soil type) to make accurate predictions.</p>
+                    
+                    <h5 id="about-features-title">Key Features</h5>
+                    <ul>
+                        <li id="feature-1">Voice input and output in multiple languages (English, Hindi, Marathi)</li>
+                        <li id="feature-2">Real-time weather data integration based on your location</li>
+                        <li id="feature-3">Advanced machine learning algorithm for accurate predictions</li>
+                        <li id="feature-4">Alternative crop suggestions with confidence scores</li>
+                    </ul>
+                    
+                    <h5 id="about-soil-title">Understanding Soil Types</h5>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card mb-3">
+                                <img src="https://pixabay.com/get/g1a32674a1c86da058fedf183102ad7c4febb8e16767a9b04e6deeb04add50f50784c737e0e6e1ccbe7ba04650229adce_1280.jpg" class="card-img-top" alt="Sandy soil">
+                                <div class="card-body">
+                                    <h5 class="card-title" id="sandy-title">Sandy Soil</h5>
+                                    <p class="card-text" id="sandy-text">Light, warm and dry soil with high drainage and low nutrient content.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-3">
+                                <img src="https://pixabay.com/get/g6a6e66b49e7fcfddacd0f8eda8d8bb8a369df3b026016e8c27fa83939d4317542cc5ecab976e4d8f1dd17bfd66629b7f200e99a5796b451f2132733a1453903d_1280.jpg" class="card-img-top" alt="Loamy soil">
+                                <div class="card-body">
+                                    <h5 class="card-title" id="loamy-title">Loamy Soil</h5>
+                                    <p class="card-text" id="loamy-text">Balanced mixture of sand, silt and clay with good drainage and nutrient retention.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-3">
+                                <img src="https://pixabay.com/get/g03d72c755c7e87f72b5a1b43ba92c980ff15a840f27c5a804a57f161ef5937c8735f6a92d8c77798c7a08fb41d2bd479540978f8318009dddf8ebda7156c3991_1280.jpg" class="card-img-top" alt="Clay soil">
+                                <div class="card-body">
+                                    <h5 class="card-title" id="clay-title">Clay Soil</h5>
+                                    <p class="card-text" id="clay-text">Heavy, nutrient-rich soil with poor drainage that retains moisture well.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close-modal-btn">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-auto py-3 bg-dark">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <span class="text-muted" id="footer-copyright">© 2023 Crop Recommendation System</span>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <span class="text-muted" id="footer-disclaimer">For educational purposes only. Always consult with agricultural experts.</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/translations.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/voice.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/weather.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
