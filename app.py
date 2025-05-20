@@ -176,11 +176,23 @@ def predict():
                 for idx in top_indices if encoder.inverse_transform([idx])[0] != predicted_crop
             ]
             
+            # Create a more structured input_data dictionary
+            input_data = {
+                'nitrogen': data.get('nitrogen', '0'),
+                'phosphorus': data.get('phosphorus', '0'),
+                'potassium': data.get('potassium', '0'),
+                'temperature': data.get('temperature', '25'),
+                'humidity': data.get('humidity', '60'),
+                'ph': data.get('ph', '7'),
+                'rainfall': data.get('rainfall', '100'),
+                'soil_type': data.get('soil_type', 'loamy')
+            }
+            
             # Return the results page
             return render_template('results.html', 
                                   predicted_crop=predicted_crop,
                                   alternative_crops=alternative_crops,
-                                  input_data=data)
+                                  input_data=input_data)
         
     except Exception as e:
         logger.error(f"Error making prediction: {e}")

@@ -34,7 +34,7 @@
                 <h3 class="my-2" id="form-title">Enter Your Field Data</h3>
             </div>
             <div class="card-body">
-                <form action="/predict" method="post" class="needs-validation" novalidate>
+                <form action="/predict" method="post" id="crop-input-form" class="needs-validation" novalidate>
                     <!-- Soil Nutrients Section -->
                     <div class="row mb-4">
                         <div class="col-12">
@@ -214,6 +214,15 @@
     <script src="{{ url_for('static', filename='js/translations.js') }}"></script>
     <script src="{{ url_for('static', filename='js/voice.js') }}"></script>
     <script src="{{ url_for('static', filename='js/weather.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/form-handler.js') }}"></script>
+    
+    <!-- Display error message if exists -->
+    {% if error %}
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        alert("{{ error }}");
+      });
+    </script>
+    {% endif %}
 </body>
 </html>
