@@ -288,21 +288,31 @@
                 }
             }
             
-            // Translate crop names
+            // Translate crop names using original stored names
             const predictedCropName = document.getElementById('predicted-crop-name');
-            if (predictedCropName) {
-                const cropKey = predictedCropName.textContent.trim().toLowerCase();
+            if (predictedCropName && window.originalCropNames && window.originalCropNames.predicted) {
+                const cropKey = window.originalCropNames.predicted.toLowerCase();
+                console.log('Translating predicted crop:', cropKey, 'to', langTranslations[cropKey]);
                 if (langTranslations[cropKey]) {
                     predictedCropName.textContent = langTranslations[cropKey];
+                } else {
+                    // If no translation found, keep original
+                    predictedCropName.textContent = window.originalCropNames.predicted;
                 }
             }
             
             // Translate alternative crop names
             const cropNames = document.querySelectorAll('.crop-name');
-            cropNames.forEach(element => {
-                const cropKey = element.getAttribute('data-crop').toLowerCase();
-                if (langTranslations[cropKey]) {
-                    element.textContent = langTranslations[cropKey];
+            cropNames.forEach((element, index) => {
+                if (window.originalCropNames && window.originalCropNames[`alt_${index}`]) {
+                    const cropKey = window.originalCropNames[`alt_${index}`].toLowerCase();
+                    console.log('Translating alternative crop:', cropKey, 'to', langTranslations[cropKey]);
+                    if (langTranslations[cropKey]) {
+                        element.textContent = langTranslations[cropKey];
+                    } else {
+                        // If no translation found, keep original
+                        element.textContent = window.originalCropNames[`alt_${index}`];
+                    }
                 }
             });
         }
@@ -310,6 +320,21 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize with English by default
             changeLanguage('en');
+            
+            // Store original crop names for reference
+            window.originalCropNames = {};
+            
+            // Store predicted crop original name
+            const predictedCropName = document.getElementById('predicted-crop-name');
+            if (predictedCropName) {
+                window.originalCropNames.predicted = predictedCropName.textContent.trim();
+            }
+            
+            // Store alternative crop original names
+            const cropNames = document.querySelectorAll('.crop-name');
+            cropNames.forEach((element, index) => {
+                window.originalCropNames[`alt_${index}`] = element.getAttribute('data-crop');
+            });
         });
     </script>
 </body>

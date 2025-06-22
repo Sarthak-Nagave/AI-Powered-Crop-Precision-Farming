@@ -110,7 +110,18 @@ const translations = {
         coconut: "Coconut",
         cotton: "Cotton",
         jute: "Jute",
-        coffee: "Coffee"
+        coffee: "Coffee",
+        wheat: "Wheat",
+        barley: "Barley",
+        sugarcane: "Sugarcane",
+        soybean: "Soybean",
+        oilseeds: "Oil Seeds",
+        groundnut: "Groundnut",
+        bajra: "Pearl Millet",
+        gram: "Gram",
+        jowar: "Sorghum",
+        millet: "Millet",
+        pulses: "Pulses"
     },
     
     // Hindi translations
@@ -220,7 +231,18 @@ const translations = {
         coconut: "नारियल",
         cotton: "कपास",
         jute: "जूट",
-        coffee: "कॉफी"
+        coffee: "कॉफी",
+        wheat: "गेहूं",
+        barley: "जौ",
+        sugarcane: "गन्ना",
+        soybean: "सोयाबीन",
+        oilseeds: "तिलहन",
+        groundnut: "मूंगफली",
+        bajra: "बाजरा",
+        gram: "चना",
+        jowar: "ज्वार",
+        millet: "बाजरा",
+        pulses: "दालें"
     },
     
     // Marathi translations
@@ -330,7 +352,18 @@ const translations = {
         coconut: "नारळ",
         cotton: "कापूस",
         jute: "तग",
-        coffee: "कॉफी"
+        coffee: "कॉफी",
+        wheat: "गहू",
+        barley: "जव",
+        sugarcane: "ऊस",
+        soybean: "सोयाबीन",
+        oilseeds: "तेल बियाणे",
+        groundnut: "भुईमूग",
+        bajra: "बाजरी",
+        gram: "हरभरा",
+        jowar: "ज्वारी",
+        millet: "तृण धान्य",
+        pulses: "डाळी"
     }
 };
 
