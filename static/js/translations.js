@@ -64,7 +64,29 @@ const translations = {
         input_summary_label: "Input Summary",
         speak_result_text: "Speak Result",
         back_text: "Back to Form",
-        new_prediction_text: "New Prediction"
+        new_prediction_text: "New Prediction",
+        home_page_text: "Home Page",
+        
+        // Units and labels
+        summary_n_label: "Nitrogen (N):",
+        summary_p_label: "Phosphorus (P):",
+        summary_k_label: "Potassium (K):",
+        summary_ph_label: "pH Value:",
+        summary_temp_label: "Temperature:",
+        summary_humidity_label: "Humidity:",
+        summary_rainfall_label: "Rainfall:",
+        summary_soil_label: "Soil Type:",
+        kgha_unit1: "kg/ha",
+        kgha_unit2: "kg/ha", 
+        kgha_unit3: "kg/ha",
+        celsius_unit: "°C",
+        percent_unit1: "%",
+        mm_unit: "mm",
+        
+        // Soil type options
+        sandy_option: "Sandy",
+        loamy_option: "Loamy",
+        clay_option: "Clay"
     },
     
     // Hindi translations
@@ -128,7 +150,29 @@ const translations = {
         input_summary_label: "इनपुट सारांश",
         speak_result_text: "परिणाम बोलें",
         back_text: "फॉर्म पर वापस जाएँ",
-        new_prediction_text: "नई भविष्यवाणी"
+        new_prediction_text: "नई भविष्यवाणी",
+        home_page_text: "होम पेज",
+        
+        // Units and labels
+        summary_n_label: "नाइट्रोजन (N):",
+        summary_p_label: "फास्फोरस (P):",
+        summary_k_label: "पोटैशियम (K):",
+        summary_ph_label: "पीएच मान:",
+        summary_temp_label: "तापमान:",
+        summary_humidity_label: "आर्द्रता:",
+        summary_rainfall_label: "वर्षा:",
+        summary_soil_label: "मिट्टी का प्रकार:",
+        kgha_unit1: "किग्रा/हेक्टेयर",
+        kgha_unit2: "किग्रा/हेक्टेयर",
+        kgha_unit3: "किग्रा/हेक्टेयर",
+        celsius_unit: "°C",
+        percent_unit1: "%",
+        mm_unit: "मिमी",
+        
+        // Soil type options
+        sandy_option: "बलुई",
+        loamy_option: "दोमट",
+        clay_option: "चिकनी"
     },
     
     // Marathi translations
@@ -192,7 +236,29 @@ const translations = {
         input_summary_label: "इनपुट सारांश",
         speak_result_text: "परिणाम बोला",
         back_text: "फॉर्मवर परत जा",
-        new_prediction_text: "नवीन भविष्यवाणी"
+        new_prediction_text: "नवीन भविष्यवाणी",
+        home_page_text: "होम पेज",
+        
+        // Units and labels
+        summary_n_label: "नायट्रोजन (N):",
+        summary_p_label: "फॉस्फरस (P):",
+        summary_k_label: "पोटॅशियम (K):",
+        summary_ph_label: "पीएच मूल्य:",
+        summary_temp_label: "तापमान:",
+        summary_humidity_label: "आर्द्रता:",
+        summary_rainfall_label: "पाऊस:",
+        summary_soil_label: "माती प्रकार:",
+        kgha_unit1: "किलो/हेक्टर",
+        kgha_unit2: "किलो/हेक्टर",
+        kgha_unit3: "किलो/हेक्टर",
+        celsius_unit: "°C",
+        percent_unit1: "%",
+        mm_unit: "मिमी",
+        
+        // Soil type options
+        sandy_option: "वाळूयुक्त",
+        loamy_option: "दोमट",
+        clay_option: "चिकट"
     }
 };
 
@@ -235,7 +301,7 @@ function updateElementText(id, html = null) {
         } else {
             const key = id.replace(/-/g, '_');
             const translation = getTranslation(key);
-            if (translation) {
+            if (translation && translation !== key) {
                 element.textContent = translation;
             }
         }
@@ -255,8 +321,30 @@ function updateAllTranslations() {
     const soilTypeSelect = document.getElementById('soil-type');
     if (soilTypeSelect) {
         const firstOption = soilTypeSelect.options[0];
-        if (firstOption.disabled) {
+        if (firstOption && firstOption.disabled) {
             firstOption.textContent = getTranslation('soil_type_placeholder');
+        }
+        
+        // Update soil type options
+        const sandyOption = document.getElementById('sandy-option');
+        const loamyOption = document.getElementById('loamy-option');
+        const clayOption = document.getElementById('clay-option');
+        
+        if (sandyOption) sandyOption.textContent = getTranslation('sandy_option');
+        if (loamyOption) loamyOption.textContent = getTranslation('loamy_option');
+        if (clayOption) clayOption.textContent = getTranslation('clay_option');
+    }
+    
+    // Update soil type value in results page
+    const soilTypeValue = document.getElementById('soil-type-value');
+    if (soilTypeValue) {
+        const currentValue = soilTypeValue.textContent.trim().toLowerCase();
+        if (currentValue === 'sandy') {
+            soilTypeValue.textContent = getTranslation('sandy_option');
+        } else if (currentValue === 'loamy') {
+            soilTypeValue.textContent = getTranslation('loamy_option');
+        } else if (currentValue === 'clay') {
+            soilTypeValue.textContent = getTranslation('clay_option');
         }
     }
     

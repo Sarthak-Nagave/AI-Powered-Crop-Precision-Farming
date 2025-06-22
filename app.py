@@ -185,7 +185,7 @@ def predict():
                 'humidity': data.get('humidity', '60'),
                 'ph': data.get('ph', '7'),
                 'rainfall': data.get('rainfall', '100'),
-                'soil_type': data.get('soil_type', 'loamy')
+                'soil_type': data.get('soil_type', 'loamy').lower()
             }
             
             # Return the results page

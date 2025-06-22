@@ -31,7 +31,7 @@
         <!-- Results Card -->
         <div class="card mb-4">
             <div class="card-header bg-success-subtle">
-                <h3 class="my-2">Crop Recommendation Results</h3>
+                <h3 class="my-2" id="results-title">Crop Recommendation Results</h3>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -40,15 +40,15 @@
                             <div class="display-1 mb-2">
                                 <i class="bi bi-check-circle-fill text-success"></i>
                             </div>
-                            <h4>Best Crop for Your Field</h4>
+                            <h4 id="best-crop-label">Best Crop for Your Field</h4>
                             <h2 class="display-5 fw-bold">{{ predicted_crop }}</h2>
                             <button type="button" class="btn btn-sm btn-outline-primary mt-2" onclick="speakResult()">
-                                <i class="bi bi-volume-up me-1"></i>Speak Result
+                                <i class="bi bi-volume-up me-1"></i><span id="speak-result-text">Speak Result</span>
                             </button>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <h4>Alternative Crops</h4>
+                        <h4 id="alternatives-label">Alternative Crops</h4>
                         <ul class="list-group">
                             {% for crop in alternative_crops %}
                             <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -64,24 +64,24 @@
                 
                 <div class="row mt-3">
                     <div class="col-12">
-                        <h4>Input Summary</h4>
+                        <h4 id="input-summary-label">Input Summary</h4>
                         <div class="row">
                             <div class="col-md-6">
                                 <ul class="list-group mb-3">
                                     <li class="list-group-item d-flex justify-content-between">
-                                        <span>Nitrogen (N):</span>
-                                        <span>{{ input_data.nitrogen }} kg/ha</span>
+                                        <span id="summary-n-label">Nitrogen (N):</span>
+                                        <span>{{ input_data.nitrogen }} <span id="kgha-unit1">kg/ha</span></span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between">
-                                        <span>Phosphorus (P):</span>
-                                        <span>{{ input_data.phosphorus }} kg/ha</span>
+                                        <span id="summary-p-label">Phosphorus (P):</span>
+                                        <span>{{ input_data.phosphorus }} <span id="kgha-unit2">kg/ha</span></span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between">
-                                        <span>Potassium (K):</span>
-                                        <span>{{ input_data.potassium }} kg/ha</span>
+                                        <span id="summary-k-label">Potassium (K):</span>
+                                        <span>{{ input_data.potassium }} <span id="kgha-unit3">kg/ha</span></span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between">
-                                        <span>pH Value:</span>
+                                        <span id="summary-ph-label">pH Value:</span>
                                         <span>{{ input_data.ph }}</span>
                                     </li>
                                 </ul>
@@ -89,20 +89,20 @@
                             <div class="col-md-6">
                                 <ul class="list-group mb-3">
                                     <li class="list-group-item d-flex justify-content-between">
-                                        <span>Temperature:</span>
-                                        <span>{{ input_data.temperature }} °C</span>
+                                        <span id="summary-temp-label">Temperature:</span>
+                                        <span>{{ input_data.temperature }} <span id="celsius-unit">°C</span></span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between">
-                                        <span>Humidity:</span>
-                                        <span>{{ input_data.humidity }}%</span>
+                                        <span id="summary-humidity-label">Humidity:</span>
+                                        <span>{{ input_data.humidity }}<span id="percent-unit1">%</span></span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between">
-                                        <span>Rainfall:</span>
-                                        <span>{{ input_data.rainfall }} mm</span>
+                                        <span id="summary-rainfall-label">Rainfall:</span>
+                                        <span>{{ input_data.rainfall }} <span id="mm-unit">mm</span></span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between">
-                                        <span>Soil Type:</span>
-                                        <span>{{ input_data.soil_type }}</span>
+                                        <span id="summary-soil-label">Soil Type:</span>
+                                        <span id="soil-type-value">{{ input_data.soil_type }}</span>
                                     </li>
                                 </ul>
                             </div>
@@ -115,7 +115,7 @@
                         <i class="bi bi-arrow-left me-1"></i><span id="back-text">Back to Form</span>
                     </a>
                     <a href="/" class="btn btn-primary">
-                        <i class="bi bi-house me-1"></i>Home Page
+                        <i class="bi bi-house me-1"></i><span id="home-page-text">Home Page</span>
                     </a>
                 </div>
             </div>
@@ -171,41 +171,121 @@
             speechSynthesis.speak(utterance);
         }
         
+        // Translation mappings
+        const translations = {
+            en: {
+                results_title: "Crop Recommendation Results",
+                best_crop_label: "Best Crop for Your Field",
+                alternatives_label: "Alternative Crops",
+                input_summary_label: "Input Summary",
+                speak_result_text: "Speak Result",
+                back_text: "Back to Form",
+                home_page_text: "Home Page",
+                summary_n_label: "Nitrogen (N):",
+                summary_p_label: "Phosphorus (P):",
+                summary_k_label: "Potassium (K):",
+                summary_ph_label: "pH Value:",
+                summary_temp_label: "Temperature:",
+                summary_humidity_label: "Humidity:",
+                summary_rainfall_label: "Rainfall:",
+                summary_soil_label: "Soil Type:",
+                kgha_unit1: "kg/ha",
+                kgha_unit2: "kg/ha",
+                kgha_unit3: "kg/ha",
+                celsius_unit: "°C",
+                percent_unit1: "%",
+                mm_unit: "mm",
+                sandy: "Sandy",
+                loamy: "Loamy",
+                clay: "Clay"
+            },
+            hi: {
+                results_title: "फसल अनुशंसा परिणाम",
+                best_crop_label: "आपके खेत के लिए सबसे अच्छी फसल",
+                alternatives_label: "वैकल्पिक फसलें",
+                input_summary_label: "इनपुट सारांश",
+                speak_result_text: "परिणाम बोलें",
+                back_text: "फॉर्म पर वापस जाएँ",
+                home_page_text: "होम पेज",
+                summary_n_label: "नाइट्रोजन (N):",
+                summary_p_label: "फास्फोरस (P):",
+                summary_k_label: "पोटैशियम (K):",
+                summary_ph_label: "पीएच मान:",
+                summary_temp_label: "तापमान:",
+                summary_humidity_label: "आर्द्रता:",
+                summary_rainfall_label: "वर्षा:",
+                summary_soil_label: "मिट्टी का प्रकार:",
+                kgha_unit1: "किग्रा/हेक्टेयर",
+                kgha_unit2: "किग्रा/हेक्टेयर",
+                kgha_unit3: "किग्रा/हेक्टेयर",
+                celsius_unit: "°C",
+                percent_unit1: "%",
+                mm_unit: "मिमी",
+                sandy: "बलुई",
+                loamy: "दोमट",
+                clay: "चिकनी"
+            },
+            mr: {
+                results_title: "पीक शिफारस परिणाम",
+                best_crop_label: "तुमच्या शेतासाठी सर्वोत्तम पीक",
+                alternatives_label: "पर्यायी पिके",
+                input_summary_label: "इनपुट सारांश",
+                speak_result_text: "परिणाम बोला",
+                back_text: "फॉर्मवर परत जा",
+                home_page_text: "होम पेज",
+                summary_n_label: "नायट्रोजन (N):",
+                summary_p_label: "फॉस्फरस (P):",
+                summary_k_label: "पोटॅशियम (K):",
+                summary_ph_label: "पीएच मूल्य:",
+                summary_temp_label: "तापमान:",
+                summary_humidity_label: "आर्द्रता:",
+                summary_rainfall_label: "पाऊस:",
+                summary_soil_label: "माती प्रकार:",
+                kgha_unit1: "किलो/हेक्टर",
+                kgha_unit2: "किलो/हेक्टर",
+                kgha_unit3: "किलो/हेक्टर",
+                celsius_unit: "°C",
+                percent_unit1: "%",
+                mm_unit: "मिमी",
+                sandy: "वाळूयुक्त",
+                loamy: "दोमट",
+                clay: "चिकट"
+            }
+        };
+
         // Language switching function
         function changeLanguage(lang) {
             currentLanguage = lang;
             
             // Update active class on language buttons
             document.querySelectorAll('.language-selector .btn').forEach(btn => {
-                if (btn.onclick.toString().includes(lang)) {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            document.querySelectorAll('.language-selector .btn').forEach(btn => {
+                if (btn.getAttribute('onclick').includes(lang)) {
                     btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
                 }
             });
             
-            // Update title and labels based on language
-            if (lang === 'hi') {
-                document.getElementById('back-text').textContent = "फॉर्म पर वापस जाएँ";
-                document.querySelector('h3.my-2').textContent = "फसल अनुशंसा परिणाम";
-                document.querySelector('h4').textContent = "आपके खेत के लिए सबसे अच्छी फसल";
-                document.querySelector('.col-md-6 h4').textContent = "वैकल्पिक फसलें";
-                document.querySelector('.mt-3 h4').textContent = "इनपुट सारांश";
-                document.querySelector('.btn-sm.btn-outline-primary span').textContent = "परिणाम बोलें";
-            } else if (lang === 'mr') {
-                document.getElementById('back-text').textContent = "फॉर्मवर परत जा";
-                document.querySelector('h3.my-2').textContent = "पीक शिफारस परिणाम";
-                document.querySelector('h4').textContent = "तुमच्या शेतासाठी सर्वोत्तम पीक";
-                document.querySelector('.col-md-6 h4').textContent = "पर्यायी पिके";
-                document.querySelector('.mt-3 h4').textContent = "इनपुट सारांश";
-                document.querySelector('.btn-sm.btn-outline-primary span').textContent = "परिणाम बोला";
-            } else {
-                document.getElementById('back-text').textContent = "Back to Form";
-                document.querySelector('h3.my-2').textContent = "Crop Recommendation Results";
-                document.querySelector('h4').textContent = "Best Crop for Your Field";
-                document.querySelector('.col-md-6 h4').textContent = "Alternative Crops";
-                document.querySelector('.mt-3 h4').textContent = "Input Summary";
-                document.querySelector('.btn-sm.btn-outline-primary span').textContent = "Speak Result";
+            // Update all translatable elements
+            const langTranslations = translations[lang] || translations['en'];
+            
+            for (const [key, value] of Object.entries(langTranslations)) {
+                const element = document.getElementById(key.replace(/_/g, '-'));
+                if (element) {
+                    element.textContent = value;
+                }
+            }
+            
+            // Special handling for soil type value
+            const soilTypeValue = document.getElementById('soil-type-value');
+            if (soilTypeValue) {
+                const currentValue = soilTypeValue.textContent.trim().toLowerCase();
+                if (langTranslations[currentValue]) {
+                    soilTypeValue.textContent = langTranslations[currentValue];
+                }
             }
         }
         
