@@ -171,8 +171,8 @@
             speechSynthesis.speak(utterance);
         }
         
-        // Translation mappings
-        const translations = {
+        // Translation mappings - including crop names
+        window.translations = {
             en: {
                 results_title: "Crop Recommendation Results",
                 best_crop_label: "Best Crop for Your Field",
@@ -197,7 +197,22 @@
                 mm_unit: "mm",
                 sandy: "Sandy",
                 loamy: "Loamy",
-                clay: "Clay"
+                clay: "Clay",
+                // Crop translations
+                rice: "Rice",
+                maize: "Maize",
+                wheat: "Wheat",
+                barley: "Barley",
+                sugarcane: "Sugarcane",
+                soybean: "Soybean",
+                cotton: "Cotton",
+                pulses: "Pulses",
+                bajra: "Pearl Millet",
+                gram: "Gram",
+                jowar: "Sorghum",
+                millet: "Millet",
+                oilseeds: "Oil Seeds",
+                groundnut: "Groundnut"
             },
             hi: {
                 results_title: "फसल अनुशंसा परिणाम",
@@ -223,7 +238,22 @@
                 mm_unit: "मिमी",
                 sandy: "बलुई",
                 loamy: "दोमट",
-                clay: "चिकनी"
+                clay: "चिकनी",
+                // Crop translations
+                rice: "चावल",
+                maize: "मक्का",
+                wheat: "गेहूं",
+                barley: "जौ",
+                sugarcane: "गन्ना",
+                soybean: "सोयाबीन",
+                cotton: "कपास",
+                pulses: "दालें",
+                bajra: "बाजरा",
+                gram: "चना",
+                jowar: "ज्वार",
+                millet: "बाजरा",
+                oilseeds: "तिलहन",
+                groundnut: "मूंगफली"
             },
             mr: {
                 results_title: "पीक शिफारस परिणाम",
@@ -249,7 +279,22 @@
                 mm_unit: "मिमी",
                 sandy: "वाळूयुक्त",
                 loamy: "दोमट",
-                clay: "चिकट"
+                clay: "चिकट",
+                // Crop translations
+                rice: "तांदूळ",
+                maize: "मका",
+                wheat: "गहू",
+                barley: "जव",
+                sugarcane: "ऊस",
+                soybean: "सोयाबीन",
+                cotton: "कापूस",
+                pulses: "डाळी",
+                bajra: "बाजरी",
+                gram: "हरभरा",
+                jowar: "ज्वारी",
+                millet: "तृण धान्य",
+                oilseeds: "तेल बियाणे",
+                groundnut: "भुईमूग"
             }
         };
 
@@ -270,7 +315,7 @@
             });
             
             // Update all translatable elements
-            const langTranslations = translations[lang] || translations['en'];
+            const langTranslations = window.translations[lang] || window.translations['en'];
             
             for (const [key, value] of Object.entries(langTranslations)) {
                 const element = document.getElementById(key.replace(/_/g, '-'));
@@ -292,7 +337,8 @@
             const predictedCropName = document.getElementById('predicted-crop-name');
             if (predictedCropName && window.originalCropNames && window.originalCropNames.predicted) {
                 const cropKey = window.originalCropNames.predicted.toLowerCase();
-                console.log('Translating predicted crop:', cropKey, 'to', langTranslations[cropKey]);
+                console.log('Translating predicted crop:', cropKey, 'Available translations:', Object.keys(langTranslations));
+                console.log('Looking for translation of:', cropKey, 'Found:', langTranslations[cropKey]);
                 if (langTranslations[cropKey]) {
                     predictedCropName.textContent = langTranslations[cropKey];
                 } else {
@@ -306,7 +352,7 @@
             cropNames.forEach((element, index) => {
                 if (window.originalCropNames && window.originalCropNames[`alt_${index}`]) {
                     const cropKey = window.originalCropNames[`alt_${index}`].toLowerCase();
-                    console.log('Translating alternative crop:', cropKey, 'to', langTranslations[cropKey]);
+                    console.log('Translating alternative crop:', cropKey, 'Found:', langTranslations[cropKey]);
                     if (langTranslations[cropKey]) {
                         element.textContent = langTranslations[cropKey];
                     } else {
