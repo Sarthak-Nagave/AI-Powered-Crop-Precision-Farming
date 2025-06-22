@@ -86,10 +86,6 @@
                     <div class="image-carousel overflow-hidden rounded" style="height: 450px;">
                         <div class="d-flex h-100" id="imageContainer" style="width: 400%; transform: translateX(0%); transition: transform 0.5s ease;">
                             <div class="image-slide">
-                                <img src="{{ url_for('static', filename='images/cropfield.jpg') }}" 
-                                     class="w-100 h-100 object-fit-cover" alt="Crop field">
-                            </div>
-                            <div class="image-slide">
                                 <img src="{{ url_for('static', filename='images/crop2.jpg') }}" 
                                      class="w-100 h-100 object-fit-cover" alt="Agricultural produce">
                             </div>
@@ -100,6 +96,10 @@
                             <div class="image-slide">
                                 <img src="{{ url_for('static', filename='images/weather.jpg') }}" 
                                      class="w-100 h-100 object-fit-cover" alt="Weather patterns">
+                            </div>
+                            <div class="image-slide">
+                                <img src="{{ url_for('static', filename='images/cropfield.jpg') }}" 
+                                     class="w-100 h-100 object-fit-cover" alt="Crop field">
                             </div>
                         </div>
                     </div>
