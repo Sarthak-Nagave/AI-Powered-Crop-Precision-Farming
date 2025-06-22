@@ -8,8 +8,35 @@ const translations = {
         // Hero section
         hero_title: "Find the perfect crop for your field",
         hero_subtitle: "Get accurate crop recommendations based on soil and climate conditions using our advanced machine learning model.",
-        get_started: "Get Started",
-        learn_more: "Learn More",
+        get_started_btn: "Get Started",
+        learn_more_btn: "Learn More",
+        
+        // Info cards
+        weather_title: "Weather Integration",
+        weather_text: "Automatically fetch current weather conditions based on your location to provide accurate recommendations.",
+        voice_title: "Voice Input & Output", 
+        voice_text: "Speak to input your data and receive recommendations using our voice-enabled interface in multiple languages.",
+        ml_title: "AI-Powered Predictions",
+        ml_text: "Our machine learning model analyzes soil properties and environmental conditions to recommend the best crops.",
+        
+        // Modal content
+        infoModalLabel: "About Crop Recommendation System",
+        about_system_title: "How This System Works",
+        about_system_text: "This crop recommendation system uses a machine learning model trained on thousands of agricultural data points to suggest the most suitable crops for your specific conditions. The model analyzes soil nutrients (N, P, K), environmental factors (temperature, humidity, rainfall), and soil properties (pH, soil type) to make accurate predictions.",
+        about_features_title: "Key Features",
+        feature_1: "Voice input and output in multiple languages (English, Hindi, Marathi)",
+        feature_2: "Real-time weather data integration based on your location",
+        feature_3: "Advanced machine learning algorithm for accurate predictions", 
+        feature_4: "Alternative crop suggestions with confidence scores",
+        about_soil_title: "Understanding Soil Types",
+        sandy_title: "Sandy Soil",
+        sandy_text: "Light, warm and dry soil with high drainage and low nutrient content.",
+        loamy_title: "Loamy Soil", 
+        loamy_text: "Balanced mixture of sand, silt and clay with good drainage and nutrient retention.",
+        clay_title: "Clay Soil",
+        clay_text: "Heavy, nutrient-rich soil with poor drainage that retains moisture well.",
+        close_modal_btn: "Close",
+        system_title: "Crop Recommendation System",
         
         // Form sections
         form_title: "Enter Your Field Data",
@@ -129,8 +156,35 @@ const translations = {
         // Hero section
         hero_title: "अपने खेत के लिए सबसे उपयुक्त फसल खोजें",
         hero_subtitle: "हमारे उन्नत मशीन लर्निंग मॉडल का उपयोग करके मिट्टी और जलवायु स्थितियों के आधार पर सटीक फसल अनुशंसाएँ प्राप्त करें।",
-        get_started: "शुरू करें",
-        learn_more: "अधिक जानकारी",
+        get_started_btn: "शुरू करें",
+        learn_more_btn: "अधिक जानकारी",
+        system_title: "फसल अनुशंसा प्रणाली",
+        
+        // Info cards
+        weather_title: "मौसम एकीकरण",
+        weather_text: "सटीक सुझाव प्रदान करने के लिए अपने स्थान के आधार पर वर्तमान मौसम की स्थिति स्वचालित रूप से प्राप्त करें।",
+        voice_title: "आवाज इनपुट और आउटपुट",
+        voice_text: "कई भाषाओं में हमारे आवाज-सक्षम इंटरफ़ेस का उपयोग करके अपना डेटा इनपुट करने और सुझाव प्राप्त करने के लिए बोलें।",
+        ml_title: "AI-संचालित भविष्यवाणियां",
+        ml_text: "हमारा मशीन लर्निंग मॉडल सर्वोत्तम फसलों की सिफारिश करने के लिए मिट्टी के गुणों और पर्यावरणीय परिस्थितियों का विश्लेषण करता है।",
+        
+        // Modal content
+        infoModalLabel: "फसल अनुशंसा प्रणाली के बारे में",
+        about_system_title: "यह प्रणाली कैसे काम करती है",
+        about_system_text: "यह फसल अनुशंसा प्रणाली आपकी विशिष्ट परिस्थितियों के लिए सबसे उपयुक्त फसलों का सुझाव देने के लिए हजारों कृषि डेटा बिंदुओं पर प्रशिक्षित मशीन लर्निंग मॉडल का उपयोग करती है। मॉडल सटीक भविष्यवाणी करने के लिए मिट्टी के पोषक तत्वों (N, P, K), पर्यावरणीय कारकों (तापमान, आर्द्रता, वर्षा), और मिट्टी के गुणों (pH, मिट्टी का प्रकार) का विश्लेषण करता है।",
+        about_features_title: "मुख्य विशेषताएं",
+        feature_1: "कई भाषाओं में आवाज इनपुट और आउटपुट (अंग्रेजी, हिंदी, मराठी)",
+        feature_2: "आपके स्थान के आधार पर वास्तविक समय मौसम डेटा एकीकरण",
+        feature_3: "सटीक भविष्यवाणियों के लिए उन्नत मशीन लर्निंग एल्गोरिदम",
+        feature_4: "विश्वास स्कोर के साथ वैकल्पिक फसल सुझाव",
+        about_soil_title: "मिट्टी के प्रकारों को समझना",
+        sandy_title: "बलुई मिट्टी",
+        sandy_text: "उच्च जल निकासी और कम पोषक तत्व सामग्री के साथ हल्की, गर्म और सूखी मिट्टी।",
+        loamy_title: "दोमट मिट्टी",
+        loamy_text: "अच्छी जल निकासी और पोषक तत्व अवधारण के साथ रेत, गाद और मिट्टी का संतुलित मिश्रण।",
+        clay_title: "चिकनी मिट्टी",
+        clay_text: "खराब जल निकासी के साथ भारी, पोषक तत्वों से भरपूर मिट्टी जो नमी को अच्छी तरह बनाए रखती है।",
+        close_modal_btn: "बंद करें",
         
         // Form sections
         form_title: "अपने खेत का डेटा दर्ज करें",
@@ -250,8 +304,35 @@ const translations = {
         // Hero section
         hero_title: "तुमच्या शेतासाठी उत्कृष्ट पीक शोधा",
         hero_subtitle: "आमच्या प्रगत मशीन लर्निंग मॉडेलचा वापर करून माती आणि हवामान परिस्थितींवर आधारित अचूक पीक शिफारसी मिळवा.",
-        get_started: "सुरु करा",
-        learn_more: "अधिक जाणून घ्या",
+        get_started_btn: "सुरु करा",
+        learn_more_btn: "अधिक जाणून घ्या",
+        system_title: "पीक शिफारस प्रणाली",
+        
+        // Info cards
+        weather_title: "हवामान एकत्रीकरण",
+        weather_text: "अचूक शिफारशी प्रदान करण्यासाठी तुमच्या स्थानावर आधारित वर्तमान हवामान परिस्थिती आपोआप मिळवा।",
+        voice_title: "आवाज इनपुट आणि आउटपुट",
+        voice_text: "अनेक भाषांमध्ये आमच्या आवाज-सक्षम इंटरफेसचा वापर करून तुमचा डेटा इनपुट करण्यासाठी आणि शिफारशी मिळवण्यासाठी बोला।",
+        ml_title: "AI-चालित अंदाज",
+        ml_text: "आमचे मशीन लर्निंग मॉडेल सर्वोत्तम पिकांची शिफारस करण्यासाठी मातीच्या गुणधर्मांचे आणि पर्यावरणीय परिस्थितींचे विश्लेषण करते।",
+        
+        // Modal content
+        infoModalLabel: "पीक शिफारस प्रणालीबद्दल",
+        about_system_title: "ही प्रणाली कशी कार्य करते",
+        about_system_text: "ही पीक शिफारस प्रणाली तुमच्या विशिष्ट परिस्थितींसाठी सर्वात योग्य पिकांचा सल्ला देण्यासाठी हजारो कृषी डेटा पॉइंट्सवर प्रशिक्षित मशीन लर्निंग मॉडेल वापरते। मॉडेल अचूक अंदाज करण्यासाठी मातीचे पोषक तत्व (N, P, K), पर्यावरणीय घटक (तापमान, आर्द्रता, पाऊस), आणि मातीचे गुणधर्म (pH, मातीचा प्रकार) यांचे विश्लेषण करते।",
+        about_features_title: "मुख्य वैशिष्ट्ये",
+        feature_1: "अनेक भाषांमध्ये आवाज इनपुट आणि आउटपुट (इंग्रजी, हिंदी, मराठी)",
+        feature_2: "तुमच्या स्थानावर आधारित रिअल-टाइम हवामान डेटा एकत्रीकरण",
+        feature_3: "अचूक अंदाजांसाठी प्रगत मशीन लर्निंग अल्गोरिदम",
+        feature_4: "विश्वास स्कोरसह पर्यायी पीक सुचवणे",
+        about_soil_title: "मातीचे प्रकार समजून घेणे",
+        sandy_title: "वाळूयुक्त माती",
+        sandy_text: "उच्च जल निकास आणि कमी पोषक तत्व सामग्रीसह हलकी, उबदार आणि कोरडी माती।",
+        loamy_title: "दोमट माती",
+        loamy_text: "चांगल्या जल निकासा आणि पोषक तत्व धारणासह वाळू, गाळ आणि चिकणमातीचे संतुलित मिश्रण।",
+        clay_title: "चिकट माती",
+        clay_text: "खराब जल निकासासह जड, पोषक तत्वांनी भरपूर माती जी ओलावा चांगल्या प्रकारे ठेवते।",
+        close_modal_btn: "बंद करा",
         
         // Form sections
         form_title: "तुमच्या शेताचा डेटा प्रविष्ट करा",
