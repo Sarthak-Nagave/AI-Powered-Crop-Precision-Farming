@@ -141,32 +141,61 @@
         function speakResult() {
             const cropName = document.getElementById('predicted-crop-name').textContent;
             let resultText = "";
+            let voiceLang = 'en-US';
+            
+            // Check available voices
+            const voices = speechSynthesis.getVoices();
+            console.log('Available voices:', voices.map(v => `${v.name} (${v.lang})`));
             
             // Set language and text based on current language
             switch(currentLanguage) {
                 case 'hi':
                     resultText = `आपके खेत के लिए सबसे अच्छी फसल है ${cropName}`;
+                    // Look for Hindi voices
+                    const hindiVoice = voices.find(voice => 
+                        voice.lang.includes('hi') || voice.lang.includes('hindi')
+                    );
+                    voiceLang = hindiVoice ? hindiVoice.lang : 'hi-IN';
                     break;
                 case 'mr':
                     resultText = `तुमच्या शेतासाठी सर्वोत्तम पीक आहे ${cropName}`;
+                    // Look for Marathi voices - fallback to Hindi if not available
+                    const marathiVoice = voices.find(voice => 
+                        voice.lang.includes('mr') || voice.name.toLowerCase().includes('marathi')
+                    );
+                    const fallbackHindiVoice = voices.find(voice => 
+                        voice.lang.includes('hi') || voice.lang.includes('hindi')
+                    );
+                    
+                    if (marathiVoice) {
+                        voiceLang = marathiVoice.lang;
+                        console.log('Using Marathi voice:', marathiVoice.name);
+                    } else if (fallbackHindiVoice) {
+                        voiceLang = fallbackHindiVoice.lang;
+                        console.log('Marathi voice not available, using Hindi voice:', fallbackHindiVoice.name);
+                    } else {
+                        voiceLang = 'hi-IN';
+                        console.log('No Marathi or Hindi voice found, using default');
+                    }
                     break;
                 default:
                     resultText = `The best crop for your field is ${cropName}`;
+                    voiceLang = 'en-US';
             }
             
             const utterance = new SpeechSynthesisUtterance(resultText);
+            utterance.lang = voiceLang;
             
-            // Set language for speech
-            switch(currentLanguage) {
-                case 'hi':
-                    utterance.lang = 'hi-IN';
-                    break;
-                case 'mr':
-                    utterance.lang = 'mr-IN';
-                    break;
-                default:
-                    utterance.lang = 'en-US';
+            // Find and set specific voice if available
+            const availableVoice = voices.find(voice => voice.lang === voiceLang);
+            if (availableVoice) {
+                utterance.voice = availableVoice;
+                console.log('Using voice:', availableVoice.name, 'for language:', voiceLang);
             }
+            
+            // Set speech rate and pitch for better clarity
+            utterance.rate = 0.8;
+            utterance.pitch = 1.0;
             
             speechSynthesis.speak(utterance);
         }
@@ -381,6 +410,15 @@
             cropNames.forEach((element, index) => {
                 window.originalCropNames[`alt_${index}`] = element.getAttribute('data-crop');
             });
+            
+            // Load voices for speech synthesis
+            if ('speechSynthesis' in window) {
+                // Trigger voice loading
+                speechSynthesis.getVoices();
+                speechSynthesis.addEventListener('voiceschanged', function() {
+                    console.log('Voices loaded:', speechSynthesis.getVoices().length);
+                });
+            }
         });
     </script>
 </body>

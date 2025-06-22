@@ -99,8 +99,20 @@ The application follows a traditional three-tier architecture:
 
 ## Changelog
 
-- June 22, 2025. Initial setup
+- June 22, 2025: Initial setup with crop recommendation ML model
+- June 22, 2025: Implemented complete multi-language support (English, Hindi, Marathi)
+- June 22, 2025: Added comprehensive crop name translations for all crops in dataset
+- June 22, 2025: Fixed voice output with enhanced language detection and fallback system
+- June 22, 2025: Integrated geolocation and weather API for real-time data
+
+## Recent Changes
+
+- Enhanced voice synthesis with Marathi language support and Hindi fallback
+- Implemented comprehensive crop name translations (wheat→गेहूं/गहू, cotton→कपास/कापूस, etc.)
+- Fixed JavaScript translation conflicts and improved debugging
+- Added voice detection system with fallback voices for unsupported languages
 
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+Requirements: Complete translation coverage for all text including crop names, voice input/output in selected languages.
