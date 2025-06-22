@@ -24,16 +24,27 @@ function initSpeechRecognition() {
         // Recognition events
         recognition.onstart = function() {
             isListening = true;
-            document.getElementById('voice-status').textContent = getTranslation('voice_listening');
-            document.getElementById('voice-status').classList.add('listening');
-            document.getElementById('voice-transcript').classList.remove('d-none');
-            document.getElementById('transcript-text').textContent = '';
+            const voiceStatusElement = document.getElementById('voice-status');
+            if (voiceStatusElement) {
+                voiceStatusElement.textContent = getTranslation('voice_listening');
+                voiceStatusElement.classList.add('listening');
+            }
+            
+            const transcriptElement = document.getElementById('voice-transcript');
+            if (transcriptElement) {
+                transcriptElement.classList.remove('d-none');
+            }
+            
+            const transcriptTextElement = document.getElementById('transcript-text');
+            if (transcriptTextElement) {
+                transcriptTextElement.textContent = '';
+            }
             
             // Update button text
-            document.getElementById('voice-button').innerHTML = `
-                <i class="bi bi-mic-fill"></i>
-            `;
-            document.getElementById('voice-button-text').textContent = getTranslation('stop_voice_text');
+            const voiceButtonTextElement = document.getElementById('voice-button-text');
+            if (voiceButtonTextElement) {
+                voiceButtonTextElement.textContent = getTranslation('stop_voice_text');
+            }
         };
         
         recognition.onresult = function(event) {
@@ -63,16 +74,23 @@ function initSpeechRecognition() {
         recognition.onend = function() {
             if (isListening) {
                 // If we're still supposed to be listening, restart
-                recognition.start();
+                try {
+                    recognition.start();
+                } catch (e) {
+                    console.log("Recognition restart failed:", e);
+                }
             } else {
-                document.getElementById('voice-status').textContent = getTranslation('voice_stopped');
-                document.getElementById('voice-status').classList.remove('listening');
+                const voiceStatusElement = document.getElementById('voice-status');
+                if (voiceStatusElement) {
+                    voiceStatusElement.textContent = getTranslation('voice_stopped');
+                    voiceStatusElement.classList.remove('listening');
+                }
                 
                 // Update button text
-                document.getElementById('voice-button').innerHTML = `
-                    <i class="bi bi-mic"></i>
-                `;
-                document.getElementById('voice-button-text').textContent = getTranslation('start_voice_text');
+                const voiceButtonTextElement = document.getElementById('voice-button-text');
+                if (voiceButtonTextElement) {
+                    voiceButtonTextElement.textContent = getTranslation('start_voice_text');
+                }
             }
         };
         

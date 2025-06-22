@@ -41,7 +41,7 @@
                                 <i class="bi bi-check-circle-fill text-success"></i>
                             </div>
                             <h4 id="best-crop-label">Best Crop for Your Field</h4>
-                            <h2 class="display-5 fw-bold">{{ predicted_crop }}</h2>
+                            <h2 class="display-5 fw-bold" id="predicted-crop-name">{{ predicted_crop }}</h2>
                             <button type="button" class="btn btn-sm btn-outline-primary mt-2" onclick="speakResult()">
                                 <i class="bi bi-volume-up me-1"></i><span id="speak-result-text">Speak Result</span>
                             </button>
@@ -49,10 +49,10 @@
                     </div>
                     <div class="col-md-6">
                         <h4 id="alternatives-label">Alternative Crops</h4>
-                        <ul class="list-group">
+                        <ul class="list-group" id="alternative-crops-list">
                             {% for crop in alternative_crops %}
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                {{ crop.crop }}
+                                <span class="crop-name" data-crop="{{ crop.crop }}">{{ crop.crop }}</span>
                                 <span class="badge bg-primary rounded-pill">{{ crop.probability }}%</span>
                             </li>
                             {% endfor %}
@@ -135,23 +135,23 @@
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ url_for('static', filename='js/translations.js') }}"></script>
     <script>
         var currentLanguage = 'en'; // Default language
         
         function speakResult() {
+            const cropName = document.getElementById('predicted-crop-name').textContent;
             let resultText = "";
             
             // Set language and text based on current language
             switch(currentLanguage) {
                 case 'hi':
-                    resultText = "आपके खेत के लिए सबसे अच्छी फसल है {{ predicted_crop }}";
+                    resultText = `आपके खेत के लिए सबसे अच्छी फसल है ${cropName}`;
                     break;
                 case 'mr':
-                    resultText = "तुमच्या शेतासाठी सर्वोत्तम पीक आहे {{ predicted_crop }}";
+                    resultText = `तुमच्या शेतासाठी सर्वोत्तम पीक आहे ${cropName}`;
                     break;
                 default:
-                    resultText = "The best crop for your field is {{ predicted_crop }}";
+                    resultText = `The best crop for your field is ${cropName}`;
             }
             
             const utterance = new SpeechSynthesisUtterance(resultText);
@@ -287,6 +287,24 @@
                     soilTypeValue.textContent = langTranslations[currentValue];
                 }
             }
+            
+            // Translate crop names
+            const predictedCropName = document.getElementById('predicted-crop-name');
+            if (predictedCropName) {
+                const cropKey = predictedCropName.textContent.trim().toLowerCase();
+                if (langTranslations[cropKey]) {
+                    predictedCropName.textContent = langTranslations[cropKey];
+                }
+            }
+            
+            // Translate alternative crop names
+            const cropNames = document.querySelectorAll('.crop-name');
+            cropNames.forEach(element => {
+                const cropKey = element.getAttribute('data-crop').toLowerCase();
+                if (langTranslations[cropKey]) {
+                    element.textContent = langTranslations[cropKey];
+                }
+            });
         }
         
         document.addEventListener('DOMContentLoaded', function() {

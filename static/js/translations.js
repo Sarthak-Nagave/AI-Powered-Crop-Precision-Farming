@@ -86,7 +86,31 @@ const translations = {
         // Soil type options
         sandy_option: "Sandy",
         loamy_option: "Loamy",
-        clay_option: "Clay"
+        clay_option: "Clay",
+        
+        // Crop name translations
+        rice: "Rice",
+        maize: "Maize", 
+        chickpea: "Chickpea",
+        kidneybeans: "Kidney Beans",
+        pigeonpeas: "Pigeon Peas",
+        mothbeans: "Moth Beans",
+        mungbean: "Mung Bean",
+        blackgram: "Black Gram",
+        lentil: "Lentil",
+        pomegranate: "Pomegranate",
+        banana: "Banana",
+        mango: "Mango",
+        grapes: "Grapes",
+        watermelon: "Watermelon",
+        muskmelon: "Muskmelon",
+        apple: "Apple",
+        orange: "Orange",
+        papaya: "Papaya",
+        coconut: "Coconut",
+        cotton: "Cotton",
+        jute: "Jute",
+        coffee: "Coffee"
     },
     
     // Hindi translations
@@ -172,7 +196,31 @@ const translations = {
         // Soil type options
         sandy_option: "बलुई",
         loamy_option: "दोमट",
-        clay_option: "चिकनी"
+        clay_option: "चिकनी",
+        
+        // Crop name translations
+        rice: "चावल",
+        maize: "मक्का", 
+        chickpea: "चना",
+        kidneybeans: "राजमा",
+        pigeonpeas: "अरहर",
+        mothbeans: "मोठ",
+        mungbean: "मूंग",
+        blackgram: "उड़द",
+        lentil: "मसूर",
+        pomegranate: "अनार",
+        banana: "केला",
+        mango: "आम",
+        grapes: "अंगूर",
+        watermelon: "तरबूज",
+        muskmelon: "खरबूजा",
+        apple: "सेब",
+        orange: "संतरा",
+        papaya: "पपीता",
+        coconut: "नारियल",
+        cotton: "कपास",
+        jute: "जूट",
+        coffee: "कॉफी"
     },
     
     // Marathi translations
@@ -258,7 +306,31 @@ const translations = {
         // Soil type options
         sandy_option: "वाळूयुक्त",
         loamy_option: "दोमट",
-        clay_option: "चिकट"
+        clay_option: "चिकट",
+        
+        // Crop name translations
+        rice: "तांदूळ",
+        maize: "मका", 
+        chickpea: "हरभरा",
+        kidneybeans: "राजमा",
+        pigeonpeas: "तूर",
+        mothbeans: "मटकी",
+        mungbean: "मूग",
+        blackgram: "उडीद",
+        lentil: "मसूर",
+        pomegranate: "डाळिंब",
+        banana: "केळी",
+        mango: "आंबा",
+        grapes: "द्राक्षे",
+        watermelon: "टरबूज",
+        muskmelon: "खरबूजा",
+        apple: "सफरचंद",
+        orange: "संत्रा",
+        papaya: "पपई",
+        coconut: "नारळ",
+        cotton: "कापूस",
+        jute: "तग",
+        coffee: "कॉफी"
     }
 };
 
