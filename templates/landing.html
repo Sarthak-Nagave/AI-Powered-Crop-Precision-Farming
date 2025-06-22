@@ -40,9 +40,9 @@
                     </div>
                 </div>
                 <div class="col-md-5 d-flex align-items-center justify-content-center">
-                    <div class="ratio ratio-16x9 w-100">
-                        <img src="{{ url_for('static', filename='images/crop1.jpg') }}" 
-                             class="img-fluid rounded" alt="Crop farming">
+                    <div class="w-100">
+                        <img src="{{ url_for('static', filename='images/crop.jpg') }}" 
+                             class="img-fluid rounded hero-image w-100" alt="Crop farming">
                     </div>
                 </div>
             </div>
@@ -51,43 +51,50 @@
         <!-- Info Cards -->
         <div class="row mb-4 g-4">
             <div class="col-md-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title"><i class="bi bi-cloud-sun me-2"></i><span id="weather-title">Weather Integration</span></h5>
+                <div class="card h-100 bg-transparent border-0">
+                    <div class="card-body text-center">
+                        <i class="bi bi-cloud-sun fs-1 text-primary mb-3"></i>
+                        <h5 class="card-title" id="weather-title">Weather Integration</h5>
                         <p class="card-text" id="weather-text">Automatically fetch current weather conditions based on your location to provide accurate recommendations.</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title"><i class="bi bi-mic me-2"></i><span id="voice-title">Voice Input & Output</span></h5>
+                <div class="card h-100 bg-transparent border-0">
+                    <div class="card-body text-center">
+                        <i class="bi bi-mic fs-1 text-primary mb-3"></i>
+                        <h5 class="card-title" id="voice-title">Voice Input & Output</h5>
                         <p class="card-text" id="voice-text">Speak to input your data and receive recommendations using our voice-enabled interface in multiple languages.</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title"><i class="bi bi-graph-up me-2"></i><span id="ml-title">AI-Powered Predictions</span></h5>
+                <div class="card h-100 bg-transparent border-0">
+                    <div class="card-body text-center">
+                        <i class="bi bi-graph-up fs-1 text-primary mb-3"></i>
+                        <h5 class="card-title" id="ml-title">AI-Powered Predictions</h5>
                         <p class="card-text" id="ml-text">Our machine learning model analyzes soil properties and environmental conditions to recommend the best crops.</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Images Banner -->
+        <!-- Large Images Banner -->
         <div class="row mb-4">
             <div class="col-12">
-                <div class="card bg-dark">
-                    <div class="card-body p-0">
-                        <div class="d-flex flex-nowrap overflow-auto">
+                <div class="position-relative overflow-hidden rounded" style="height: 400px;">
+                    <div class="d-flex h-100">
+                        <div class="flex-fill position-relative overflow-hidden">
                             <img src="{{ url_for('static', filename='images/cropfield.jpg') }}" 
-                                 class="img-banner" alt="Crop field">
+                                 class="w-100 h-100 object-fit-cover" alt="Crop field">
+                        </div>
+                        <div class="flex-fill position-relative overflow-hidden">
                             <img src="{{ url_for('static', filename='images/crop2.jpg') }}" 
-                                 class="img-banner" alt="Agricultural produce">
-                            <img src="{{ url_for('static', filename='images/weather.jpg') }}" 
-                                 class="img-banner" alt="Weather and agriculture">
+                                 class="w-100 h-100 object-fit-cover" alt="Agricultural produce">
+                        </div>
+                        <div class="flex-fill position-relative overflow-hidden">
+                            <img src="{{ url_for('static', filename='images/crop1.jpg') }}" 
+                                 class="w-100 h-100 object-fit-cover" alt="Corn field">
                         </div>
                     </div>
                 </div>
