@@ -83,21 +83,21 @@
         <div class="row mb-4">
             <div class="col-12">
                 <div class="position-relative">
-                    <div class="image-carousel overflow-hidden rounded" style="height: 400px;">
-                        <div class="d-flex h-100 transition-transform" id="imageContainer" style="transform: translateX(0px); transition: transform 0.3s ease;">
-                            <div class="flex-shrink-0 position-relative overflow-hidden" style="width: 33.333%;">
+                    <div class="image-carousel overflow-hidden rounded" style="height: 300px;">
+                        <div class="d-flex h-100" id="imageContainer" style="width: 400%; transform: translateX(0%); transition: transform 0.5s ease;">
+                            <div class="image-slide">
                                 <img src="{{ url_for('static', filename='images/cropfield.jpg') }}" 
                                      class="w-100 h-100 object-fit-cover" alt="Crop field">
                             </div>
-                            <div class="flex-shrink-0 position-relative overflow-hidden" style="width: 33.333%;">
+                            <div class="image-slide">
                                 <img src="{{ url_for('static', filename='images/crop2.jpg') }}" 
                                      class="w-100 h-100 object-fit-cover" alt="Agricultural produce">
                             </div>
-                            <div class="flex-shrink-0 position-relative overflow-hidden" style="width: 33.333%;">
+                            <div class="image-slide">
                                 <img src="{{ url_for('static', filename='images/crop1.jpg') }}" 
                                      class="w-100 h-100 object-fit-cover" alt="Corn field">
                             </div>
-                            <div class="flex-shrink-0 position-relative overflow-hidden" style="width: 33.333%;">
+                            <div class="image-slide">
                                 <img src="{{ url_for('static', filename='images/weather.jpg') }}" 
                                      class="w-100 h-100 object-fit-cover" alt="Weather patterns">
                             </div>
@@ -105,17 +105,16 @@
                     </div>
                     
                     <!-- Navigation Arrows -->
-                    <button class="carousel-nav carousel-nav-left" id="prevBtn" onclick="scrollCarousel(-1)">
+                    <button class="carousel-nav carousel-nav-left" onclick="scrollCarousel(-1)">
                         <i class="bi bi-chevron-left"></i>
                     </button>
-                    <button class="carousel-nav carousel-nav-right" id="nextBtn" onclick="scrollCarousel(1)">
+                    <button class="carousel-nav carousel-nav-right" onclick="scrollCarousel(1)">
                         <i class="bi bi-chevron-right"></i>
                     </button>
                     
-                    <!-- Navigation Dots -->
-                    <div class="carousel-dots">
-                        <span class="dot active" onclick="currentSlide(1)"></span>
-                        <span class="dot" onclick="currentSlide(2)"></span>
+                    <!-- Navigation Progress Bar -->
+                    <div class="carousel-progress">
+                        <div class="progress-bar" id="progressBar"></div>
                     </div>
                 </div>
             </div>
@@ -201,11 +200,11 @@
         
         // Image Carousel JavaScript
         let currentSlideIndex = 0;
-        const totalSlides = 2; // We have 4 images but show 3 at a time, so 2 positions
+        const totalSlides = 4;
         
         function scrollCarousel(direction) {
             const container = document.getElementById('imageContainer');
-            const slideWidth = container.parentElement.offsetWidth;
+            const progressBar = document.getElementById('progressBar');
             
             currentSlideIndex += direction;
             
@@ -216,33 +215,19 @@
                 currentSlideIndex = 0;
             }
             
-            const translateX = -currentSlideIndex * (slideWidth / 3);
-            container.style.transform = `translateX(${translateX}px)`;
+            // Calculate the transform percentage (each slide is 25% of the container)
+            const translateX = -currentSlideIndex * 25;
+            container.style.transform = `translateX(${translateX}%)`;
             
-            // Update dots
-            updateDots();
+            // Update progress bar
+            const progressPosition = (currentSlideIndex * 25);
+            progressBar.style.marginLeft = `${progressPosition}%`;
         }
         
-        function currentSlide(n) {
-            currentSlideIndex = n - 1;
-            const container = document.getElementById('imageContainer');
-            const slideWidth = container.parentElement.offsetWidth;
-            const translateX = -currentSlideIndex * (slideWidth / 3);
-            container.style.transform = `translateX(${translateX}px)`;
-            updateDots();
-        }
-        
-        function updateDots() {
-            const dots = document.querySelectorAll('.dot');
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentSlideIndex);
-            });
-        }
-        
-        // Auto-scroll every 5 seconds
+        // Auto-scroll every 4 seconds
         setInterval(() => {
             scrollCarousel(1);
-        }, 5000);
+        }, 4000);
     </script>
 </body>
 </html>
