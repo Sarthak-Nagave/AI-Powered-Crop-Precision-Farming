@@ -89,9 +89,9 @@ main {
 /* Image Carousel Styles */
 .image-carousel {
     position: relative;
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
+    width: 100%;
     overflow: hidden;
+    border-radius: 8px;
 }
 
 .image-slide {
@@ -185,7 +185,6 @@ main {
     }
     
     .image-carousel {
-        height: 40vh !important;
-        min-height: 250px !important;
+        height: 200px !important;
     }
 }
