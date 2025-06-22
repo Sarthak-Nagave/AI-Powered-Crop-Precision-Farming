@@ -41,7 +41,7 @@
                 </div>
                 <div class="col-md-5 d-flex align-items-center justify-content-center">
                     <div class="ratio ratio-16x9 w-100">
-                        <img src="https://pixabay.com/get/g43d7fc4f496e79253882267d4fa9809e94dc0fee477b08ab4d847bd13db58e7bc8f53aa43b16f6e9f70548674c2f6e354d40fdcd44c81d6e3cef94362d45d85a_1280.jpg" 
+                        <img src="{{ url_for('static', filename='images/crop1.jpg') }}" 
                              class="img-fluid rounded" alt="Crop farming">
                     </div>
                 </div>
@@ -82,12 +82,12 @@
                 <div class="card bg-dark">
                     <div class="card-body p-0">
                         <div class="d-flex flex-nowrap overflow-auto">
-                            <img src="https://pixabay.com/get/g2240f6ea98ecbd790f668649e01e13905de648ffffd937c6864fd61fdee1ad62eb0e1571093e17a5dbf818c474fe28fe467855c3c1e5d2ff7f1e300386706a18_1280.jpg" 
+                            <img src="{{ url_for('static', filename='images/cropfield.jpg') }}" 
                                  class="img-banner" alt="Crop field">
-                            <img src="https://pixabay.com/get/ge3f92ad5cd2e7116f38936d5f5d4ef50ffe8f70092916b95867665da649e87ee9fb8f49184bdfd4005583461e6ca29bc606dec8fd116ae6878dd637f0d4c677f_1280.jpg" 
+                            <img src="{{ url_for('static', filename='images/crop2.jpg') }}" 
+                                 class="img-banner" alt="Agricultural produce">
+                            <img src="{{ url_for('static', filename='images/weather.jpg') }}" 
                                  class="img-banner" alt="Weather and agriculture">
-                            <img src="https://pixabay.com/get/gcc72e318ca1c6397e765d4791b92ce000b307d9cfe74911f436e053c392c3243b4b1fdcb79aa9cadb671e4974c6b1269502aa5001a71d38bb763423f8f5a7470_1280.jpg" 
-                                 class="img-banner" alt="Soil types">
                         </div>
                     </div>
                 </div>
@@ -130,7 +130,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="card mb-3">
-                                <img src="https://pixabay.com/get/g1a32674a1c86da058fedf183102ad7c4febb8e16767a9b04e6deeb04add50f50784c737e0e6e1ccbe7ba04650229adce_1280.jpg" class="card-img-top" alt="Sandy soil">
+                                <img src="{{ url_for('static', filename='images/sandysoil.jpg') }}" class="card-img-top" alt="Sandy soil">
                                 <div class="card-body">
                                     <h5 class="card-title" id="sandy-title">Sandy Soil</h5>
                                     <p class="card-text" id="sandy-text">Light, warm and dry soil with high drainage and low nutrient content.</p>
@@ -139,7 +139,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="card mb-3">
-                                <img src="https://pixabay.com/get/g6a6e66b49e7fcfddacd0f8eda8d8bb8a369df3b026016e8c27fa83939d4317542cc5ecab976e4d8f1dd17bfd66629b7f200e99a5796b451f2132733a1453903d_1280.jpg" class="card-img-top" alt="Loamy soil">
+                                <img src="{{ url_for('static', filename='images/loamysoil.jpg') }}" class="card-img-top" alt="Loamy soil">
                                 <div class="card-body">
                                     <h5 class="card-title" id="loamy-title">Loamy Soil</h5>
                                     <p class="card-text" id="loamy-text">Balanced mixture of sand, silt and clay with good drainage and nutrient retention.</p>
@@ -148,7 +148,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="card mb-3">
-                                <img src="https://pixabay.com/get/g03d72c755c7e87f72b5a1b43ba92c980ff15a840f27c5a804a57f161ef5937c8735f6a92d8c77798c7a08fb41d2bd479540978f8318009dddf8ebda7156c3991_1280.jpg" class="card-img-top" alt="Clay soil">
+                                <img src="{{ url_for('static', filename='images/claysoil.jpg') }}" class="card-img-top" alt="Clay soil">
                                 <div class="card-body">
                                     <h5 class="card-title" id="clay-title">Clay Soil</h5>
                                     <p class="card-text" id="clay-text">Heavy, nutrient-rich soil with poor drainage that retains moisture well.</p>
