@@ -36,7 +36,7 @@ except Exception as e:
     metrics = {"accuracy": "N/A", "precision": "N/A", "recall": "N/A", "f1": "N/A"}
 
 # Weather API settings
-WEATHER_API_KEY = os.environ.get("WEATHER_API_KEY", "default_key")
+WEATHER_API_KEY = "5e99e0cbed494f581fa030dad0942b41"
 WEATHER_API_URL = "https://api.openweathermap.org/data/2.5/weather"
 
 @app.route('/')
